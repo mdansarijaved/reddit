@@ -1,13 +1,11 @@
 "use client";
 
 export default function Navbar() {
-  return(
+  return (
     <>
-    <div>
-    <ul className="md:flex lg:gap-10 gap-6 text-white">
-          <button className={`hover:text-[#3cffd0]`}>
-           reddit
-          </button>
+      <div className="absolute top-0 left-0 w-full">
+        <ul className="md:flex lg:gap-10 gap-6 text-white">
+          <button className={`hover:text-[#3cffd0]`}>reddit</button>
         </ul>
         <form
           className={`md:flex bg-[#292929] rounded-lg hidden px-2 items-center group`}
@@ -27,7 +25,7 @@ export default function Navbar() {
             placeholder="Search"
           />
         </form>
-    </div>
+      </div>
     </>
-  )
+  );
 }

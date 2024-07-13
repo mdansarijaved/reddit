@@ -1,0 +1,88 @@
+.menu {
+  text-align: center;
+}
+
+.menu li {
+  display: inline-block;
+  margin-right: 15px;
+  transition: all 0.3s ease-in-out;
+}
+
+.menu li.active .submenu {
+  height: 85px;
+}
+
+.menu li.active a {
+  color: #3862a0;
+}
+
+.menu li.active a::before {
+  visibility: visible;
+  transform: scale(1, 1);
+}
+
+.menu li .submenu {
+  overflow: hidden;
+  position: absolute;
+  left: 0;
+  width: 100%;
+  background-color: #3862a0;
+  height: 0;
+  line-height: 40px;
+  box-sizing: border-box;
+  transition: height 0.3s ease-in-out;
+  transition-delay: 0.1s;
+}
+
+.menu li .submenu a {
+  color: #fff;
+  margin-top: 20px;
+  font-size: 16px;
+}
+
+.menu li .submenu a:hover {
+  color: #fff;
+  text-decoration: underline;
+}
+
+.menu li a {
+  color: #999;
+  display: block;
+  padding: 0 7px 0 7px;
+  margin: 0 0 10px;
+  text-decoration: none;
+  position: relative;
+}
+
+.menu li a::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 3px;
+  bottom: -10px;
+  left: 0px;
+  background-color: #3862a0;
+  transition: all 0.2s ease-in-out;
+  transform: scale(0, 0);
+  visibility: hidden;
+}
+
+/* Hide the default scrollbar */
+.custom-scrollbar {
+  scrollbar-width: inherit; /* For Firefox */
+  scrollbar-color: #0e1113; /* For Firefox */
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px; /* For Chrome, Safari, and Opera */
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #0e1113;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 10px;
+  border: 2px solid #0e1113;
+}
