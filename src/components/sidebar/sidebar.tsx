@@ -73,6 +73,7 @@ export default function SideBar() {
           subtitle="Create a community"
         ></Droptdown>
       </div>
+      <div className="w-full border border-gray-800"></div>
       <div>
         <Droptdown title="resources">
           {resources.map((resource, index) => (

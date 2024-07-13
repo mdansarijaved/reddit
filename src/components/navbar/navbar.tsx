@@ -12,7 +12,7 @@ import { Menu } from "lucide-react";
 export default function Navbar() {
   return (
     <>
-      <div className="bg-[#0e1113] px-4">
+      <div className="bg-[#0e1113] px-4 absolute top-0 left-0 w-full">
         <div className="w-full flex justify-between relative bg-[#0e1113] text-white h-16 border-b border-[#3e4142] items-center px-1">
           <div className="flex gap-2">
             <button className="lg:hidden mr-2">
