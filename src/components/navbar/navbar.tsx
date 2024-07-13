@@ -1,4 +1,7 @@
+"use client";
+
 export default function Navbar() {
+  return(
     <>
     <div>
     <ul className="md:flex lg:gap-10 gap-6 text-white">
@@ -26,4 +29,5 @@ export default function Navbar() {
         </form>
     </div>
     </>
+  )
 }
