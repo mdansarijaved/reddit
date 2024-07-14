@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import SideBar from "@/components/sidebar/sidebar";
 import Navbar from "@/components/navbar/navbar";
+import Hero from "@/components/hero-section/page";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,8 +22,13 @@ export default function RootLayout({
       <body className={inter.className}>
         <div className="bg-[#0e1113] ">
           <Navbar />
-          <div className="flex justify-center items-center pt-14">
+          <div className="flex pt-14">
+            <div className="flex justify-center items-center">
             <SideBar />
+            </div>
+            <div className="w-full">
+            <Hero />
+            </div>
             <div className="w-full h-screen">{children}</div>
           </div>
         </div>
