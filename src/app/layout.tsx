@@ -24,7 +24,6 @@ export default function RootLayout({
           <div className="flex justify-center items-center pt-14">
             <SideBar />
             <div className="w-full h-screen">{children}</div>
-            <div className="w-full h-screen">{children}</div>
           </div>
         </div>
       </body>
