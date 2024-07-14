@@ -15,12 +15,14 @@ export default function Navbar() {
     <>
       <div className="bg-[#0e1113] px-4 absolute top-0 left-0 w-full">
         <div className="w-full flex justify-between relative bg-[#0e1113] text-white h-16 border-b border-[#3e4142] items-center px-1">
-          <div className="flex gap-2">
-            <button className="lg:hidden mr-2">
+          <div className="flex">
+            <button className="lg:hidden mr-4">
               <Menu size={24} />
             </button>
+          <Link href="/" className="flex gap-2">
             <FaReddit className="text-red-600 bg-white rounded-full" size={30} />
             <p className="font-bold text-2xl hidden lg:block">reddit</p>
+          </Link>
           </div>
           <form
             onClick={(e) => {
