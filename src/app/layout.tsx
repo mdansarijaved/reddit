@@ -21,7 +21,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <div className="bg-[#0e1113]">
           <Navbar />
-          <div>
+          <div className="flex justify-center items-center pt-14">
             <SideBar />
             {children}
           </div>

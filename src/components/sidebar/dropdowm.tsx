@@ -22,9 +22,7 @@ export default function Droptdown({
         <svg
           xmlns="http://www.w3.org/2000/svg"
           className={`h-6 w-6 text-gray-600  ${
-            isOpen
-              ? "transform rotate-180 transition-all duration-300"
-              : "transition-all duration-300"
+            isOpen ? "transform rotate-180 transition-all " : "transition-all "
           }`}
           fill="none"
           viewBox="0 0 24 24"
