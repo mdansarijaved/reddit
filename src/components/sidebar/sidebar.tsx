@@ -46,7 +46,7 @@ export default function SideBar() {
   ];
   return (
     <div
-      className={`max-h-screen h-screen overflow-y-scroll  max-w-sm w-72 px-7  border-r border-gray-700 ${styles["custom-scrollbar"]}`}
+      className={`max-h-screen h-screen overflow-y-scroll hidden lg:block max-w-sm w-72 px-7  border-r border-gray-700 ${styles["custom-scrollbar"]}`}
     >
       <div className="text-white py-4  font-semibold  ">
         <p className="flex  items-center gap-5 py-2 rounded-lg ">

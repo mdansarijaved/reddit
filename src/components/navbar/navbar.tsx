@@ -19,7 +19,7 @@ export default function Navbar() {
             <button className="lg:hidden mr-2">
               <Menu size={24} />
             </button>
-            <FaReddit className="text-red-600" size={30} />
+            <FaReddit className="text-red-600 bg-white rounded-full" size={30} />
             <p className="font-bold text-2xl hidden lg:block">reddit</p>
           </div>
           <form
