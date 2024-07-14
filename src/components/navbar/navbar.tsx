@@ -8,6 +8,7 @@ import { MousePointerClick } from "lucide-react";
 import { Bell } from "lucide-react";
 import { CircleUserRound } from "lucide-react";
 import { Menu } from "lucide-react";
+import Link from "next/link";
 
 export default function Navbar() {
   return (
@@ -41,10 +42,10 @@ export default function Navbar() {
             <button className="hover:bg-[#333d42] px-2 py-2 rounded-full">
               <MessageCircleMore />
             </button>
-            <button className="md:flex gap-2 hover:bg-[#333d42] px-2 py-2 rounded-full hidden">
+            <Link href="/createpost" className="md:flex gap-2 hover:bg-[#333d42] px-2 py-2 rounded-full hidden">
               <Plus />
               <p>Create</p>
-            </button>
+            </Link>
             <button className="hover:bg-[#333d42] px-2 py-2 rounded-full hidden md:block">
               <Bell />
             </button>
