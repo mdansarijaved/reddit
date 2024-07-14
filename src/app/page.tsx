@@ -1,3 +1,4 @@
+import Hero from "@/components/hero-section/page";
 import Navbar from "@/components/navbar/navbar";
 import Image from "next/image";
 

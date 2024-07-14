@@ -24,12 +24,11 @@ export default function RootLayout({
           <Navbar />
           <div className="flex pt-14">
             <div className="flex justify-center items-center">
-            <SideBar />
+              <SideBar />
             </div>
-            <div className="w-full">
-            <Hero />
+            <div className="relative w-full h-screen flex justify-center items-center">
+              {children}
             </div>
-            <div className="w-full h-screen">{children}</div>
           </div>
         </div>
       </body>

@@ -1,5 +1,3 @@
-"use client";
-
 import { FaReddit } from "react-icons/fa6";
 import { Search } from "lucide-react";
 import { MessageCircleMore } from "lucide-react";
@@ -9,6 +7,7 @@ import { Bell } from "lucide-react";
 import { CircleUserRound } from "lucide-react";
 import { Menu } from "lucide-react";
 import Link from "next/link";
+import AuthButton from "./login";
 
 export default function Navbar() {
   return (
@@ -19,17 +18,15 @@ export default function Navbar() {
             <button className="lg:hidden mr-4">
               <Menu size={24} />
             </button>
-          <Link href="/" className="flex gap-2">
-            <FaReddit className="text-red-600 bg-white rounded-full" size={30} />
-            <p className="font-bold text-2xl hidden lg:block">reddit</p>
-          </Link>
+            <Link href="/" className="flex gap-2">
+              <FaReddit
+                className="text-red-600 bg-white rounded-full"
+                size={30}
+              />
+              <p className="font-bold text-2xl hidden lg:block">reddit</p>
+            </Link>
           </div>
-          <form
-            onClick={(e) => {
-              e.preventDefault();
-            }}
-            className="sm:flex hidden gap-2 xl:absolute xl:right-1/2 xl:translate-x-1/2 bg-[#333d42] px-3 mx-6 lg:mx-0 rounded-full py-[0.7rem] items-center w-full lg:w-[30rem]"
-          >
+          <form className="sm:flex hidden gap-2 xl:absolute xl:right-1/2 xl:translate-x-1/2 bg-[#333d42] px-3 mx-6 lg:mx-0 rounded-full py-[0.7rem] items-center w-full lg:w-[30rem]">
             <Search size={24} />
             <input
               type="text"
@@ -44,7 +41,10 @@ export default function Navbar() {
             <button className="hover:bg-[#333d42] px-2 py-2 rounded-full">
               <MessageCircleMore />
             </button>
-            <Link href="/createpost" className="md:flex gap-2 hover:bg-[#333d42] px-2 py-2 rounded-full hidden">
+            <Link
+              href="/createpost"
+              className="md:flex gap-2 hover:bg-[#333d42] px-2 py-2 rounded-full justify-center items-center hidden"
+            >
               <Plus />
               <p>Create</p>
             </Link>
@@ -52,7 +52,7 @@ export default function Navbar() {
               <Bell />
             </button>
             <button className="hover:bg-[#333d42] px-2 py-2 rounded-full">
-              <CircleUserRound />
+              <AuthButton />
             </button>
           </div>
         </div>
