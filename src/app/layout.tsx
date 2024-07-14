@@ -19,9 +19,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <div className="bg-[#0e1113]">
+        <div className="bg-[#0e1113] ">
           <Navbar />
-          <div className="flex justify-center items-center pt-14">
+          <div className="flex justify-center items-center ">
             <SideBar />
             <div className="w-full h-screen">{children}</div>
           </div>
