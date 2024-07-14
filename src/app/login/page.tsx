@@ -44,7 +44,7 @@ export default function Login({
       },
     });
 
-    if (error) {
+    if (error?.message) {
       console.log(error);
 
       return redirect("/login?message=Could not authenticate user");

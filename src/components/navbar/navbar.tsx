@@ -4,7 +4,7 @@ import { MessageCircleMore } from "lucide-react";
 import { Plus } from "lucide-react";
 import { MousePointerClick } from "lucide-react";
 import { Bell } from "lucide-react";
-import { CircleUserRound } from "lucide-react";
+
 import { Menu } from "lucide-react";
 import Link from "next/link";
 import AuthButton from "./login";

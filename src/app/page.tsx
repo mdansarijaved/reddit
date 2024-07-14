@@ -3,5 +3,5 @@ import Navbar from "@/components/navbar/navbar";
 import Image from "next/image";
 
 export default function Home() {
-  return <main className="text-white"></main>;
+  return <main className="text-white">hello</main>;
 }
