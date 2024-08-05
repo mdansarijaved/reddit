@@ -9,12 +9,12 @@ import Hero from "@/components/hero-section/hero";
 
 export default function Home() {
   const [selectedSort, setSelectedSort] = useState("Best");
-  const [selectedCard, setSelectedCard] = useState(<PiCards size={20}/>);
+  const [selectedCard, setSelectedCard] = useState(<PiCards size={20} />);
 
   return (
     <>
-      <div className="text-white mt-1 w-full h-full bg-[#0b1416]">
-        <div className="w-[50rem] mt-4 ml-20">
+      <div className="text-white mt-1 grid justify-center bg-[#0e1113]  w-full h-full">
+        <div className="w-[50rem] mt-10  ">
           <div className="flex gap-4 border-b border-[#242c2e] pb-4 px-4 items-center">
             <DropdownMenu.Root>
               <DropdownMenu.Trigger>
@@ -27,7 +27,7 @@ export default function Home() {
                 value={selectedSort}
                 onValueChange={setSelectedSort}
               >
-                <DropdownMenu.Content color="teal">
+                <DropdownMenu.Content color="brown">
                   <DropdownMenu.Label>Sort by</DropdownMenu.Label>
                   <DropdownMenu.RadioItem value="Best">
                     Best
@@ -48,7 +48,6 @@ export default function Home() {
               </DropdownMenu.RadioGroup>
             </DropdownMenu.Root>
 
-
             <DropdownMenu.Root>
               <DropdownMenu.Trigger>
                 <Button color="teal" radius="full" variant="ghost">
@@ -59,17 +58,25 @@ export default function Home() {
               <DropdownMenu.RadioGroup>
                 <DropdownMenu.Content color="teal">
                   <DropdownMenu.Label>View</DropdownMenu.Label>
-                  <DropdownMenu.RadioItem onClick={()=>setSelectedCard(<PiCards size={20}/>)} value="Best">
-                    <PiCards/>Card
+                  <DropdownMenu.RadioItem
+                    onClick={() => setSelectedCard(<PiCards size={20} />)}
+                    value="Best"
+                  >
+                    <PiCards />
+                    Card
                   </DropdownMenu.RadioItem>
-                  <DropdownMenu.RadioItem onClick={()=>setSelectedCard(<PiCardsThree size={20}/>)} value="Hot">
-                    <PiCardsThree/>Compact
+                  <DropdownMenu.RadioItem
+                    onClick={() => setSelectedCard(<PiCardsThree size={20} />)}
+                    value="Hot"
+                  >
+                    <PiCardsThree />
+                    Compact
                   </DropdownMenu.RadioItem>
                 </DropdownMenu.Content>
               </DropdownMenu.RadioGroup>
             </DropdownMenu.Root>
           </div>
-          <Hero/>
+          <Hero />
         </div>
       </div>
     </>

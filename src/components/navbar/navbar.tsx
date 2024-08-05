@@ -11,7 +11,7 @@ import AuthButton from "./login";
 export default function Navbar() {
   return (
     <>
-      <div className="bg-[#0e1113] px-3 absolute top-0 left-0 w-full">
+      <div className="bg-[#0e1113] px-3 fixed top-0 left-0 w-full z-30">
         <div className="w-full flex justify-between relative bg-[#0e1113] text-white h-[3.6rem] border-b border-[#3e4142] items-center px-1">
           <div className="flex">
             <button className="lg:hidden mr-4">
@@ -25,7 +25,7 @@ export default function Navbar() {
               <p className="font-bold text-2xl hidden lg:block">reddit</p>
             </Link>
           </div>
-          <form className="sm:flex hidden gap-2 xl:absolute xl:right-1/2 xl:translate-x-1/2 bg-[#333d42] px-3 mx-6 lg:mx-0 rounded-full py-[0.5rem] items-center w-full lg:w-[30rem]">
+          <form className="lg:flex hidden gap-2 xl:absolute xl:right-1/2 xl:translate-x-1/2 bg-[#333d42] px-3 mx-6 lg:mx-0 rounded-full py-[0.5rem] items-center w-full lg:w-[30rem]">
             <Search size={24} />
             <input
               type="text"
@@ -34,7 +34,9 @@ export default function Navbar() {
             />
           </form>
           <div className="flex gap-2 items-center">
-            <button className="hover:bg-[#333d42] px-2 py-2 rounded-full hidden lg:block"><MousePointerClick/></button>
+            <button className="hover:bg-[#333d42] px-2 py-2 rounded-full hidden lg:block">
+              <MousePointerClick />
+            </button>
             <button className="hover:bg-[#333d42] px-2 py-2 rounded-full">
               <MessageCircleMore />
             </button>
@@ -48,9 +50,10 @@ export default function Navbar() {
             <button className="hover:bg-[#333d42] px-2 py-2 rounded-full hidden md:block">
               <Bell />
             </button>
-            <button className="hover:bg-[#333d42] rounded-full">
+            <div className=" rounded-full hidden lg:flex">
               <AuthButton />
-            </button>
+            </div>
+            <div className="w-8 h-8 rounded-full bg-red-900 lg:hidden"></div>
           </div>
         </div>
       </div>

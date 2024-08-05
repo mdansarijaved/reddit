@@ -3,7 +3,6 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { CircleUserRound } from "lucide-react";
 
-
 export default async function AuthButton() {
   const supabase = createClient();
 
@@ -21,11 +20,9 @@ export default async function AuthButton() {
 
   return user ? (
     <div className="flex items-center justify-center text-white gap-4">
-      Hey, {user.email}!
+      Hey, {user.email?.split("@")[0]}!
       <form action={signOut}>
-        <button className="py-2 px-4 rounded-md no-underline bg-btn-background hover:bg-btn-background-hover">
-          Logout
-        </button>
+        <button className="py-2  rounded-md no-underline ">Logout</button>
       </form>
     </div>
   ) : (
@@ -33,7 +30,7 @@ export default async function AuthButton() {
       href="/login"
       className="py-2 px-2 flex rounded-md no-underline bg-btn-background hover:bg-btn-background-hover"
     >
-      <CircleUserRound/>
+      <CircleUserRound />
     </Link>
   );
 }
