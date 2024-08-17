@@ -20,15 +20,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={` bg-[#0e1113]`}>
+      <body className={` `}>
         <Theme>
-          <div className=" ">
+          <div className="bg-[#0e1113] ">
             <Navbar />
-            <div className="flex pt-14">
+            <div className="flex pt-14 w-full">
               <div className="lg:flex hidden justify-center items-center relative min-h-screen h-screen  max-w-sm w-72 px-7">
                 <SideBar />
               </div>
-              <div className="relative w-full h-screen flex justify-center items-center">
+              <div className="relative w-full  flex justify-center items-center  text-white">
                 {children}
               </div>
             </div>

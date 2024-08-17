@@ -11,8 +11,8 @@ import AuthButton from "./login";
 export default function Navbar() {
   return (
     <>
-      <div className="bg-[#0e1113] px-3 fixed top-0 left-0 w-full z-30">
-        <div className="w-full flex justify-between relative bg-[#0e1113] text-white h-[3.6rem] border-b border-[#3e4142] items-center px-1">
+      <div className="bg-[#0e1113] px-3 fixed top-0 left-0 w-full z-30 border-b border-[#3e4142]">
+        <div className="w-full flex justify-between relative bg-[#0e1113] text-white h-[3.6rem]  items-center px-1">
           <div className="flex">
             <button className="lg:hidden mr-4">
               <Menu size={24} />

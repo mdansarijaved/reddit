@@ -43,12 +43,72 @@ export default function SideBar() {
       icon: <HouseIcon size={20} />,
       title: "about",
     },
+    {
+      icon: <HouseIcon size={20} />,
+      title: "about",
+    },
+    {
+      icon: <HouseIcon size={20} />,
+      title: "about",
+    },
+    {
+      icon: <HouseIcon size={20} />,
+      title: "about",
+    },
+    {
+      icon: <HouseIcon size={20} />,
+      title: "about",
+    },
+    {
+      icon: <HouseIcon size={20} />,
+      title: "about",
+    },
+    {
+      icon: <HouseIcon size={20} />,
+      title: "about",
+    },
+    {
+      icon: <HouseIcon size={20} />,
+      title: "about",
+    },
+    {
+      icon: <HouseIcon size={20} />,
+      title: "about",
+    },
+    {
+      icon: <HouseIcon size={20} />,
+      title: "about",
+    },
+    {
+      icon: <HouseIcon size={20} />,
+      title: "about",
+    },
+    {
+      icon: <HouseIcon size={20} />,
+      title: "about",
+    },
+    {
+      icon: <HouseIcon size={20} />,
+      title: "about",
+    },
+    {
+      icon: <HouseIcon size={20} />,
+      title: "about",
+    },
+    {
+      icon: <HouseIcon size={20} />,
+      title: "about",
+    },
+    {
+      icon: <HouseIcon size={20} />,
+      title: "about",
+    },
   ];
   return (
     <div
-      className={`fixed top-0 py-20 left-0  max-h-screen h-screen overflow-y-scroll hidden  lg:block  max-w-sm w-72 px-7 bg-[#0e1113]  border-r border-gray-700 z-20 ${styles["custom-scrollbar"]}`}
+      className={`h-full overflow-y-scroll bg-[#0e1113] hidden lg:fixed top-0 left-0 z-10 pt-14   lg:block  max-w-sm w-72 px-7  border-r border-gray-700  ${styles["custom-scrollbar"]}`}
     >
-      <div className="text-white py-4  font-semibold  ">
+      <div className="text-white py-4  font-semibold  w-full">
         <p className="flex  items-center gap-5 py-2 rounded-lg ">
           <HouseIcon size={20} /> Home
         </p>
@@ -60,7 +120,7 @@ export default function SideBar() {
         </p>
       </div>
       <div className="w-full border border-gray-800"></div>
-      <div>
+      <div className="">
         <Droptdown
           title="custom feed"
           subtitle="create a custom feed"

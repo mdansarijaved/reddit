@@ -1,18 +1,12 @@
 
-import { createClient } from "@/utils/supabase/server";
+import { auth } from "@/auth";
+
 import { createServerActionProcedure } from "zsa";
 
 
 const authProcedureBase = createServerActionProcedure().handler(async () => {
     try {
-        const supabase = createClient();
-
-        const {
-            data: { user },
-        } = await supabase.auth.getUser();
-        if (!user) {
-            throw new Error("User not authenticated");
-        }
+        const user = await auth();
 
         return {
             ...user,

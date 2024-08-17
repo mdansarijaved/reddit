@@ -1,7 +1,7 @@
 import { X } from "lucide-react";
 import Image from "next/image";
 import React, { useState } from "react";
-import { Input } from "./ui/input";
+import { Input } from "../ui/input";
 import { useForm } from "react-hook-form";
 import onUpload from "@/lib/image-upload";
 
