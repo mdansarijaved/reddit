@@ -1,5 +1,5 @@
 import { House } from "lucide";
-import { HouseIcon } from "lucide-react";
+import { HouseIcon, Plus } from "lucide-react";
 import React from "react";
 import { Separator } from "../ui/separator";
 import Droptdown from "./dropdowm";
@@ -11,112 +11,18 @@ export default function SideBar() {
       icon: <HouseIcon size={20} />,
       title: "about",
     },
-    {
-      icon: <HouseIcon size={20} />,
-      title: "about",
-    },
-    {
-      icon: <HouseIcon size={20} />,
-      title: "about",
-    },
-    {
-      icon: <HouseIcon size={20} />,
-      title: "about",
-    },
-    {
-      icon: <HouseIcon size={20} />,
-      title: "about",
-    },
-    {
-      icon: <HouseIcon size={20} />,
-      title: "about",
-    },
-    {
-      icon: <HouseIcon size={20} />,
-      title: "about",
-    },
-    {
-      icon: <HouseIcon size={20} />,
-      title: "about",
-    },
-    {
-      icon: <HouseIcon size={20} />,
-      title: "about",
-    },
-    {
-      icon: <HouseIcon size={20} />,
-      title: "about",
-    },
-    {
-      icon: <HouseIcon size={20} />,
-      title: "about",
-    },
-    {
-      icon: <HouseIcon size={20} />,
-      title: "about",
-    },
-    {
-      icon: <HouseIcon size={20} />,
-      title: "about",
-    },
-    {
-      icon: <HouseIcon size={20} />,
-      title: "about",
-    },
-    {
-      icon: <HouseIcon size={20} />,
-      title: "about",
-    },
-    {
-      icon: <HouseIcon size={20} />,
-      title: "about",
-    },
-    {
-      icon: <HouseIcon size={20} />,
-      title: "about",
-    },
-    {
-      icon: <HouseIcon size={20} />,
-      title: "about",
-    },
-    {
-      icon: <HouseIcon size={20} />,
-      title: "about",
-    },
-    {
-      icon: <HouseIcon size={20} />,
-      title: "about",
-    },
-    {
-      icon: <HouseIcon size={20} />,
-      title: "about",
-    },
-    {
-      icon: <HouseIcon size={20} />,
-      title: "about",
-    },
-    {
-      icon: <HouseIcon size={20} />,
-      title: "about",
-    },
-    {
-      icon: <HouseIcon size={20} />,
-      title: "about",
-    },
   ];
   return (
     <div
-      className={`h-full overflow-y-scroll bg-[#0e1113] hidden lg:fixed top-0 left-0 z-10 pt-14   lg:block  max-w-sm w-72 px-7  border-r border-gray-700  ${styles["custom-scrollbar"]}`}
+      className={`h-full overflow-y-scroll fixed  max-h-screen bottom-0 pt-14 left-0  z-10 
+           lg:block  w-[350px] px-7  border-x border-gray-700  ${styles["custom-scrollbar"]}`}
     >
-      <div className="text-white py-4  font-semibold  w-full">
+      <div className="text-white text-sm py-4  w-full">
         <p className="flex  items-center gap-5 py-2 rounded-lg ">
           <HouseIcon size={20} /> Home
         </p>
         <p className="flex  items-center gap-5 py-2 rounded-lg ">
-          <HouseIcon size={20} /> Home
-        </p>
-        <p className="flex  items-center gap-5 py-2 rounded-lg ">
-          <HouseIcon size={20} /> Home
+          <Plus size={20} /> Community
         </p>
       </div>
       <div className="w-full border border-gray-800"></div>

@@ -5,15 +5,20 @@ import { postSchema } from '@/schema/schema';
 import * as z from 'zod';
 
 export const createpost = async (postdata: z.infer<typeof postSchema>) => {
+    const validatesItems = postSchema.safeParse(postdata);
     const session = await auth();
+    const userId = session?.user.id;
+    if (!validatesItems.success) {
+        return { error: "Invalid Fields" };
+    }
     try {
-        const { body, media, title } = postdata;
+        const { body, media, title } = validatesItems.data;
         const post = await db.posts.create({
             data: {
                 title,
                 body,
                 media,
-                userId: session?.user.id,
+                userId: userId,
             }
         });
         if (!post) {

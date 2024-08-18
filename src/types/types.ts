@@ -3,5 +3,5 @@ export type Posts = {
     title: string;
     body: string;
     media: string[];
-    userId: string | null;
+    userId: string;
 };

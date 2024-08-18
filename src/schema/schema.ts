@@ -19,9 +19,7 @@ export const registerSchema = z.object({
 
 
 export const postSchema = z.object({
-    id: z.string(),
     title: z.string().min(1).max(300),
     body: z.string().min(1),
     media: z.string().array(),
-    userId: z.string(),
 });

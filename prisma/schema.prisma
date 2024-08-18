@@ -24,21 +24,25 @@ model User {
   posts                 Posts[]
   isTwoFactorEnabled    Boolean                @default(false)
   twoFactorConfirmation TwoFactorConfirmation?
+  Likedby               Likedby[]
+  Community             Community[]
+  Members               Members[]
 }
 
 model Account {
-  id                String  @id @default(cuid())
+  id                String    @id @default(cuid())
   userId            String
   type              String
   provider          String
   providerAccountId String
-  refresh_token     String? @db.Text
-  access_token      String? @db.Text
+  refresh_token     String?   @db.Text
+  access_token      String?   @db.Text
   expires_at        Int?
   token_type        String?
   scope             String?
-  id_token          String? @db.Text
+  id_token          String?   @db.Text
   session_state     String?
+  likes             Likedby[]
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
@@ -81,10 +85,45 @@ model TwoFactorConfirmation {
 }
 
 model Posts {
-  id     String   @id @default(cuid())
-  title  String
-  body   String
-  media  String[]
-  userId String?
-  User   User?    @relation(fields: [userId], references: [id])
+  id        String    @id @default(cuid())
+  title     String
+  body      String
+  media     String[]
+  userId    String
+  likes     Likedby[]
+  createdAt DateTime
+  updatedAt DateTime
+  User      User      @relation(fields: [userId], references: [id])
+}
+
+model Likedby {
+  id        String   @id @default(cuid())
+  userid    String
+  user      User     @relation(fields: [userid], references: [id])
+  likedat   DateTime
+  Posts     Posts?   @relation(fields: [postsId], references: [id])
+  postsId   String?
+  Account   Account? @relation(fields: [accountId], references: [id])
+  accountId String?
+}
+
+model Community {
+  id             String    @id @default(cuid())
+  community_name String
+  AdminId        String
+  user           User      @relation(fields: [AdminId], references: [id])
+  members        Members[]
+  createdAt      DateTime
+  updatedAt      DateTime
+
+  @@unique([community_name])
+}
+
+model Members {
+  id          String     @id @default(cuid())
+  memberId    String
+  Member      User       @relation(fields: [memberId], references: [id])
+  joinedAt    DateTime
+  Community   Community? @relation(fields: [communityId], references: [id])
+  communityId String?
 }
