@@ -20,13 +20,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="w-full bg-[#0e1113] ">
-        <Navbar />
-        <SideBar />
-        <div className="relative w-full flex justify-center p-16 items-center   text-white">
-          {children}
-        </div>
-        <RightBar />
+      <body className="w-full bg-[#0e1113] flex justify-center items-center ">
+        {children}
       </body>
     </html>
   );

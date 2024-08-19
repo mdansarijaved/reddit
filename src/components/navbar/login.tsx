@@ -2,13 +2,24 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { CircleUserRound } from "lucide-react";
 import { auth, signOut } from "@/auth";
+import Image from "next/image";
 
 export default async function AuthButton() {
   const user = await auth();
 
   return user ? (
     <div className="flex items-center justify-center text-white gap-4">
-      Hey, {user.user.email?.split("@")[0]}!
+      {user.user.image ? (
+        <Image
+          src={user.user.image}
+          height={100}
+          width={100}
+          alt="user image"
+          className="w-10 h-10 rounded-full"
+        />
+      ) : (
+        <div className="w-10 h-10 rounded-full bg-red-900"></div>
+      )}
       <form
         action={async () => {
           "use server";

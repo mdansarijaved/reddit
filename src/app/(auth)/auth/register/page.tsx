@@ -1,5 +1,6 @@
 "use client";
 import { register } from "@/app/actions/register";
+import OauthButton from "@/components/auth/oauthbutton";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -12,6 +13,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { registerSchema } from "@/schema/schema";
 import { zodResolver } from "@hookform/resolvers/zod";
+import Link from "next/link";
 import { redirect } from "next/navigation";
 import React, { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
@@ -44,8 +46,8 @@ function RegisterForm() {
   };
 
   return (
-    <div className="h-full w-full flex justify-center items-center">
-      <div className="w-[400px] h-[600px]">
+    <div className="h-full w-full flex flex-col bg-white justify-center items-center">
+      <div className="w-[400px] ">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
             <div>
@@ -104,10 +106,20 @@ function RegisterForm() {
                 {success}
               </div>
             )}
-            <Button className="w-full">submit</Button>
+            <Button className="w-full bg-neutral-700">submit</Button>
           </form>
         </Form>
+        <div className="w-full text-center font-thin uppercase text-xs py-2">
+          or continue with
+        </div>
+        <OauthButton />
       </div>
+      <p className="text-xs">
+        Already a user ?{" "}
+        <Link href={"/auth/login"} className="text-muted-foreground">
+          Login
+        </Link>{" "}
+      </p>
     </div>
   );
 }

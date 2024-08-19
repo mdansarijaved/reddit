@@ -1,7 +1,7 @@
 "use client";
 
 import { login } from "@/app/actions/login";
-import { signIn } from "@/auth";
+import OauthButton from "@/components/auth/oauthbutton";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -12,11 +12,12 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
 import { singInSchema } from "@/schema/schema";
 import { zodResolver } from "@hookform/resolvers/zod";
+import Link from "next/link";
 import React, { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
+import { BsGithub, BsGoogle, BsGooglePlay } from "react-icons/bs";
 import * as z from "zod";
 
 type loginfrom = z.infer<typeof singInSchema>;
@@ -48,8 +49,8 @@ function LoginForm() {
   };
 
   return (
-    <div className="h-full w-full flex justify-center items-center">
-      <div className="w-[400px] h-[600px]">
+    <div className="h-full bg-white w-full flex flex-col justify-center items-center">
+      <div className="w-[400px] ">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
             <div>
@@ -95,24 +96,20 @@ function LoginForm() {
                 {success}
               </div>
             )}
-            <Button className="w-full">submit</Button>
+            <Button className="w-full bg-neutral-700">submit</Button>
           </form>
         </Form>
-        {/* <div className="flex justify-center items-center gap-2 w-full py-2 ">
-          <Button
-            onClick={() => onClick("google")}
-            className="w-full bg-emerald-500 text-white text-center py-2 px-3 rounded-lg"
-          >
-            Google
-          </Button>
-          <Button
-            onClick={() => onClick("github")}
-            className="w-full bg-emerald-500 text-white text-center py-2 px-3 rounded-lg"
-          >
-            Github
-          </Button>
-        </div> */}
+        <div className="w-full text-center font-thin uppercase text-xs py-2">
+          or continue with
+        </div>
+        <OauthButton />
       </div>
+      <p className="text-xs ">
+        New here ?{" "}
+        <Link href={"/auth/register"} className="text-muted-foreground py-5">
+          Register
+        </Link>
+      </p>
     </div>
   );
 }

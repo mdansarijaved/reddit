@@ -1,5 +1,7 @@
+import { auth, signOut } from "@/auth";
 import Section from "@/components/hero-section/mainsection";
 import PostCard from "@/components/hero-section/postcard";
+import { Button } from "@/components/ui/button";
 import { db } from "@/lib/db";
 
 export default async function Home() {
@@ -8,10 +10,19 @@ export default async function Home() {
       User: true,
     },
   });
-
+  const user = await auth();
+  console.log(user);
   return (
-    <main className={`relative max-w-4xl  `}>
+    <main className={`relative w-full  `}>
       <Section />
+      <form
+        action={async () => {
+          "use server";
+          await signOut();
+        }}
+      >
+        <Button>signout</Button>
+      </form>
       <div className="w-full">
         {posts.map((post) => (
           <PostCard posts={post} key={post.id} />

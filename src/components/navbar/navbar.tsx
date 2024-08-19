@@ -8,10 +8,11 @@ import {
 } from "lucide-react";
 import React from "react";
 import Link from "next/link";
+import AuthButton from "./login";
 
 export default function Navbar() {
   return (
-    <div className="w-full flex justify-between fixed top-0 left-0 border-b border-x border-gray-700 bg-[#0e1113] z-20 text-white py-3  items-center px-5">
+    <div className="w-full flex justify-between fixed top-0 left-0 border-b border-x border-gray-700 bg-[#0e1113] z-20 text-white py-3  items-center px-6">
       <div className="flex">
         <button className="lg:hidden mr-4">
           <Menu size={24} />
@@ -45,6 +46,7 @@ export default function Navbar() {
         <button className="hover:bg-[#333d42]  py-2 rounded-full hidden md:block">
           <Bell />
         </button>
+        <AuthButton />
       </div>
     </div>
   );

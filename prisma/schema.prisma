@@ -91,16 +91,19 @@ model Posts {
   media     String[]
   userId    String
   likes     Likedby[]
-  createdAt DateTime
-  updatedAt DateTime
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @default(now())
   User      User      @relation(fields: [userId], references: [id])
+  parentId  String?
+  parent    Posts?    @relation("PostToPost", fields: [parentId], references: [id])
+  children  Posts[]   @relation("PostToPost")
 }
 
 model Likedby {
   id        String   @id @default(cuid())
   userid    String
   user      User     @relation(fields: [userid], references: [id])
-  likedat   DateTime
+  likedat   DateTime @default(now())
   Posts     Posts?   @relation(fields: [postsId], references: [id])
   postsId   String?
   Account   Account? @relation(fields: [accountId], references: [id])
@@ -113,8 +116,8 @@ model Community {
   AdminId        String
   user           User      @relation(fields: [AdminId], references: [id])
   members        Members[]
-  createdAt      DateTime
-  updatedAt      DateTime
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @default(now())
 
   @@unique([community_name])
 }
@@ -123,7 +126,7 @@ model Members {
   id          String     @id @default(cuid())
   memberId    String
   Member      User       @relation(fields: [memberId], references: [id])
-  joinedAt    DateTime
+  joinedAt    DateTime   @default(now())
   Community   Community? @relation(fields: [communityId], references: [id])
   communityId String?
 }
