@@ -3,7 +3,7 @@ import { auth } from "@/auth";
 
 export default async function CreatePost() {
   return (
-    <div>
+    <div className="py-10">
       <CreatePostForm />
     </div>
   );

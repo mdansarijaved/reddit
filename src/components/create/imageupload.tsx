@@ -1,4 +1,4 @@
-import { X } from "lucide-react";
+import { PaperclipIcon, X } from "lucide-react";
 import Image from "next/image";
 import React, { useState } from "react";
 import { Input } from "../ui/input";
@@ -12,9 +12,7 @@ type filetype = {
 function ImageUpload({
   setImagesUrl,
   ImagesUrl,
-  ShowImageContainer,
 }: {
-  ShowImageContainer: boolean;
   setImagesUrl: (value: string[]) => void;
   ImagesUrl: string[];
 }) {
@@ -45,46 +43,47 @@ function ImageUpload({
     }
   };
   return (
-    <div className={`${ShowImageContainer ? "flex flex-col " : "hidden"} `}>
-      <div className="flex justify-center items-center pr-3 py-3">
-        <Input
-          type="file"
-          {...register("file")}
-          className="bg-transparent outline-none file:text-white border-none"
-        />
-        <button
-          onClick={handleSubmit(handlePaste)}
-          className="py-1 px-3 bg-green-900 rounded"
-        >
-          add
-        </button>
-      </div>
-      <div className="flex justify-center items-center gap-4 flex-wrap py-2">
-        {Images.map((image, index) => (
-          <div key={index} className="w-fit h-fit relative">
-            <span
-              className="absolute -top-2 -right-2 bg-black/70 rounded-full"
-              onClick={() => removeImage(index)}
-            >
-              <X size={16} />
-            </span>
-            {isSubmitting && (
-              <div className="absolute top-0 left-0 w-full h-full bg-black/70 flex justify-center items-center">
-                <p className="text-white">Uploading...</p>
-              </div>
-            )}
-            <Image
-              src={image}
-              alt="image"
-              width={100}
-              height={100}
-              className="w-20 h-20 bg-cover bg-center"
-            />
-          </div>
-        ))}
-      </div>
-    </div>
+    <label
+      htmlFor="fileinput"
+      className="px-3 border-t border-gray-700 flex justify-start py-2 items-center "
+    >
+      <Input
+        id="fileinput"
+        type="file"
+        {...register("file")}
+        className="bg-transparent hidden  outline-none file:text-white border-none"
+      />
+      <button type="button" onClick={handleSubmit(handlePaste)}></button>
+      <PaperclipIcon size={18} />
+    </label>
   );
 }
 
 export default ImageUpload;
+
+{
+  /* <div className="flex justify-center items-center gap-4 flex-wrap py-2">
+  {Images.map((image, index) => (
+    <div key={index} className="w-fit h-fit relative">
+      <span
+        className="absolute -top-2 -right-2 bg-black/70 rounded-full"
+        onClick={() => removeImage(index)}
+      >
+        <X size={16} />
+      </span>
+      {isSubmitting && (
+        <div className="absolute top-0 left-0 w-full h-full bg-black/70 flex justify-center items-center">
+          <p className="text-white">Uploading...</p>
+        </div>
+      )}
+      <Image
+        src={image}
+        alt="image"
+        width={100}
+        height={100}
+        className="w-20 h-20 bg-cover bg-center"
+      />
+    </div>
+  ))}
+</div> */
+}

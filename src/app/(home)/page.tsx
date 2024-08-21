@@ -15,14 +15,7 @@ export default async function Home() {
   return (
     <main className={`relative w-full  `}>
       <Section />
-      <form
-        action={async () => {
-          "use server";
-          await signOut();
-        }}
-      >
-        <Button>signout</Button>
-      </form>
+
       <div className="w-full">
         {posts.map((post) => (
           <PostCard posts={post} key={post.id} />

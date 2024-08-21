@@ -1,12 +1,13 @@
 "use client";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { PaperclipIcon, Search } from "lucide-react";
+import { Search } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 import ImageUpload from "./imageupload";
 import { postSchema } from "@/schema/schema";
 import { createpost } from "@/app/actions/post";
+import ReactQuill from "react-quill";
 
 type postType = z.infer<typeof postSchema>;
 
@@ -26,10 +27,13 @@ function CreatePostForm() {
   });
   const [selected, setSelected] = useState(" ");
   const [wordcount, setwordcount] = useState(0);
-  const [ShowImageContainer, setShowImageContainer] = useState(false);
   const [ImagesUrl, setImagesUrl] = useState<string[]>([]);
-  const [message, setMessage] = useState("");
-  const [error, setError] = useState("");
+  const [content, setContent] = useState("sadfasdfasd");
+
+  const handleContentChange = (value: any) => {
+    console.log(value);
+    setContent(value);
+  };
 
   useEffect(() => {
     setValue("media", ImagesUrl);
@@ -70,7 +74,7 @@ function CreatePostForm() {
               selected === button.id
                 ? "underline underline-offset-8 decoration-[#648efc]"
                 : ""
-            }`}
+            } ${button.label === "Link" ? "text-muted-foreground" : ""}`}
           >
             {button.label}
           </button>
@@ -84,9 +88,7 @@ function CreatePostForm() {
             placeholder="Title*"
             disabled={isSubmitting}
             className={` bg-[#0e1113] border ${
-              wordcount > 300
-                ? "outline-red-500 "
-                : "outline-none hover:border-white"
+              wordcount > 300 ? "outline-red-500 " : "outline-none "
             }   text-sm py-4 px-4 rounded-2xl w-full border-[#3e4142] custom-scrollbar-global`}
           />
           <div className="flex justify-between items-center px-3">
@@ -102,25 +104,51 @@ function CreatePostForm() {
           >
             Add tags
           </button>
-          <div className="flex items-center justify-end px-3">
-            <button
-              type="button"
-              onClick={() => setShowImageContainer(!ShowImageContainer)}
-            >
-              <PaperclipIcon size={20} />
-            </button>
-          </div>
-          <ImageUpload
-            setImagesUrl={setImagesUrl}
-            ImagesUrl={ImagesUrl}
-            ShowImageContainer={ShowImageContainer}
+          <ReactQuill
+            value={content}
+            onChange={handleContentChange}
+            modules={{
+              toolbar: [
+                [{ header: "1" }, { header: "2" }, { font: [] }],
+                [{ size: [] }],
+                ["bold", "italic", "underline", "strike", "blockquote"],
+                [
+                  { list: "ordered" },
+                  { list: "bullet" },
+                  { indent: "-1" },
+                  { indent: "+1" },
+                ],
+                ["link", "image", "video"],
+                ["clean"],
+              ],
+            }}
+            formats={[
+              "header",
+              "font",
+              "size",
+              "bold",
+              "italic",
+              "underline",
+              "strike",
+              "blockquote",
+              "list",
+              "bullet",
+              "indent",
+              "link",
+              "image",
+              "video",
+            ]}
+            className="bg-white text-black"
           />
-          <div></div>
-          <textarea
-            placeholder="Body"
-            {...register("body", { required: true })}
-            className="bg-[#0e1113] text-white outline-none focus:border-white text-sm px-4 py-4 border w-full rounded-2xl mt-4 min-h-40 border-[#3e4142]"
-          ></textarea>
+          {/* <div className="border rounded-xl overflow-hidden flex flex-col gap-2 border-gray-700 mt-5">
+
+            <textarea
+              placeholder="Body"
+              {...register("body", { required: true })}
+              className="bg-[#0e1113] outline-none focus:outline-none focus:border-none border-none text-white text-sm px-4 py-4 border w-full min-h-40 "
+            ></textarea>
+            <ImageUpload setImagesUrl={setImagesUrl} ImagesUrl={ImagesUrl} />
+          </div> */}
           {errors.body && (
             <span className="text-xs font-semibold">Body is required</span>
           )}
