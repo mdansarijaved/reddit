@@ -7,36 +7,28 @@ import * as z from "zod";
 import ImageUpload from "./imageupload";
 import { postSchema } from "@/schema/schema";
 import { createpost } from "@/app/actions/post";
-import ReactQuill from "react-quill";
+import { Form, FormControl, FormField, FormItem, FormLabel } from "../ui/form";
+import { Input } from "../ui/input";
+import { Textarea } from "../ui/textarea";
+import Tiptap from "./editor";
 
 type postType = z.infer<typeof postSchema>;
 
 function CreatePostForm() {
   const buttons = [
-    { id: "text", label: "Text" },
+    { id: "post", label: "Post" },
     { id: "link", label: "Link" },
     { id: "poll", label: "Poll" },
   ];
-  const {
-    register,
-    handleSubmit,
-    formState: { errors, isSubmitting },
-    setValue,
-  } = useForm<postType>({
+  const form = useForm<postType>({
     resolver: zodResolver(postSchema),
   });
   const [selected, setSelected] = useState(" ");
   const [wordcount, setwordcount] = useState(0);
   const [ImagesUrl, setImagesUrl] = useState<string[]>([]);
-  const [content, setContent] = useState("sadfasdfasd");
-
-  const handleContentChange = (value: any) => {
-    console.log(value);
-    setContent(value);
-  };
 
   useEffect(() => {
-    setValue("media", ImagesUrl);
+    form.setValue("media", ImagesUrl);
   }, [ImagesUrl]);
 
   const onsubmit = async (postdata: postType) => {
@@ -80,6 +72,51 @@ function CreatePostForm() {
           </button>
         ))}
       </div>
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onsubmit)} className="space-y-6">
+          <div className="space-y-6">
+            <FormField
+              control={form.control}
+              name="title"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Title</FormLabel>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      type="text"
+                      className="bg-transparent border border-gray-700  "
+                    />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="body"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Body</FormLabel>
+                  <FormControl>
+                    <Tiptap body={field.name} onChange={field.onChange} />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+          </div>
+        </form>
+      </Form>
+    </div>
+  );
+}
+
+export default CreatePostForm;
+
+{
+  /**
+
+    
+     
       <form onSubmit={handleSubmit(onsubmit)}>
         <div className="text-white mt-10 relative">
           <textarea
@@ -104,51 +141,15 @@ function CreatePostForm() {
           >
             Add tags
           </button>
-          <ReactQuill
-            value={content}
-            onChange={handleContentChange}
-            modules={{
-              toolbar: [
-                [{ header: "1" }, { header: "2" }, { font: [] }],
-                [{ size: [] }],
-                ["bold", "italic", "underline", "strike", "blockquote"],
-                [
-                  { list: "ordered" },
-                  { list: "bullet" },
-                  { indent: "-1" },
-                  { indent: "+1" },
-                ],
-                ["link", "image", "video"],
-                ["clean"],
-              ],
-            }}
-            formats={[
-              "header",
-              "font",
-              "size",
-              "bold",
-              "italic",
-              "underline",
-              "strike",
-              "blockquote",
-              "list",
-              "bullet",
-              "indent",
-              "link",
-              "image",
-              "video",
-            ]}
-            className="bg-white text-black"
-          />
-          {/* <div className="border rounded-xl overflow-hidden flex flex-col gap-2 border-gray-700 mt-5">
 
+          <div className="border rounded-xl overflow-hidden flex flex-col gap-2 border-gray-700 mt-5">
             <textarea
               placeholder="Body"
               {...register("body", { required: true })}
               className="bg-[#0e1113] outline-none focus:outline-none focus:border-none border-none text-white text-sm px-4 py-4 border w-full min-h-40 "
             ></textarea>
             <ImageUpload setImagesUrl={setImagesUrl} ImagesUrl={ImagesUrl} />
-          </div> */}
+          </div>
           {errors.body && (
             <span className="text-xs font-semibold">Body is required</span>
           )}
@@ -171,8 +172,6 @@ function CreatePostForm() {
         </div>
       </form>
       <div></div>
-    </div>
-  );
+  
+  */
 }
-
-export default CreatePostForm;

@@ -38,10 +38,8 @@ function RegisterForm() {
     setSuccess("");
     startTransition(async () => {
       const data = await register(values);
-
       setError(data.error);
       setSuccess(data.success);
-      redirect("/auth/login");
     });
   };
 
