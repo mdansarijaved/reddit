@@ -8,10 +8,7 @@ function HomeLayout({ children }: { children: ReactNode }) {
     <div>
       <Navbar />
       <SideBar />
-      <div className="relative w-full max-w-5xl  p-16   text-white">
-        {children}
-      </div>
-      <RightBar />
+      <div className="relative w-full max-w-5xl  p-16   ">{children}</div>
     </div>
   );
 }

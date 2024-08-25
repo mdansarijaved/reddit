@@ -3,7 +3,8 @@ import authConfig from "@/auth.config";
 import { apiAuthPrefix, authRoutes, DEFAULT_LOGIN_REDIRECT, protectedRoutes, publicRoutes } from '@/routes'
 const { auth } = NextAuth(authConfig)
 
-export default auth((req) => {
+
+export default auth((req: NextAuthRequest) => {
     const { nextUrl } = req;
     const isLoggedin = !!req.auth;
     console.log("Route: ", req.nextUrl.pathname);

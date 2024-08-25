@@ -1,58 +1,109 @@
-import { House } from "lucide";
-import { HouseIcon, Plus } from "lucide-react";
+import {
+  AlignLeft,
+  HouseIcon,
+  Plus,
+  PlusIcon,
+  SearchSlashIcon,
+} from "lucide-react";
 import React from "react";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 import { Separator } from "../ui/separator";
-import Droptdown from "./dropdowm";
-import styles from "./dopdown.module.css";
-
+import { ScrollArea } from "../ui/scroll-area";
+import { Button, buttonVariants } from "../ui/button";
+import Link from "next/link";
+import { cn } from "@/lib/utils";
+import { RiCommunityFill } from "react-icons/ri";
+import { GoPeople } from "react-icons/go";
 export default function SideBar() {
-  const resources = [
-    {
-      icon: <HouseIcon size={20} />,
-      title: "about",
-    },
-  ];
   return (
     <div
-      className={`h-full overflow-y-scroll fixed  max-h-screen bottom-0 pt-14 left-0  z-10 
-           lg:block  w-[350px] px-7  border-x border-gray-700  ${styles["custom-scrollbar"]}`}
+      className="fixed   bottom-0 pt-14 left-0 h-full  z-10 text-neutral-500
+           lg:block w-full max-w-72 px-4  border-x  border-gray-300"
     >
-      <div className="text-white text-sm py-4  w-full">
-        <p className="flex  items-center gap-5 py-2 rounded-lg ">
-          <HouseIcon size={20} /> Home
-        </p>
-        <p className="flex  items-center gap-5 py-2 rounded-lg ">
-          <Plus size={20} /> Community
-        </p>
-      </div>
-      <div className="w-full border border-gray-800"></div>
-      <div className="">
-        <Droptdown
-          title="custom feed"
-          subtitle="create a custom feed"
-        ></Droptdown>
-      </div>
-      <div className="w-full border border-gray-800"></div>
-      <div>
-        <Droptdown
-          title="Communities"
-          subtitle="Create a community"
-        ></Droptdown>
-      </div>
-      <div className="w-full border border-gray-800"></div>
-      <div>
-        <Droptdown title="resources">
-          {resources.map((resource, index) => (
-            <div
-              key={index}
-              className="flex items-center text-gray-200 gap-5 py-2 rounded-lg"
-            >
-              {resource.icon}
-              {resource.title}
-            </div>
-          ))}
-        </Droptdown>
-      </div>
+      <ScrollArea className={`h-[calc(100vh - 100px)] `}>
+        <div className=" text-sm py-4  w-full">
+          <Link
+            href={"/"}
+            className={cn(
+              buttonVariants({ variant: "ghost" }),
+              "w-full px-1   justify-start gap-5 py-2  "
+            )}
+          >
+            <HouseIcon size={20} /> Home
+          </Link>
+          <Link
+            href={"/"}
+            className={cn(
+              buttonVariants({ variant: "ghost" }),
+              "w-full px-1   justify-start gap-5 py-2  "
+            )}
+          >
+            <GoPeople size={20} /> Popular
+          </Link>
+          <Link
+            href={"/"}
+            className={cn(
+              buttonVariants({ variant: "ghost" }),
+              "w-full px-1   justify-start gap-5 py-2  "
+            )}
+          >
+            <SearchSlashIcon size={20} /> Explore
+          </Link>
+          <Link
+            href={"/"}
+            className={cn(
+              buttonVariants({ variant: "ghost" }),
+              "w-full px-1   justify-start gap-5 py-2  "
+            )}
+          >
+            <AlignLeft size={20} /> All
+          </Link>
+        </div>
+        <Separator className="bg-neutral-300" />
+        <div className="">
+          <Accordion
+            type="multiple"
+            collapsible
+            className="font-extralight text-sm"
+          >
+            <AccordionItem value="groups">
+              <AccordionTrigger className="uppercase ">Groups</AccordionTrigger>
+              <AccordionContent className="">
+                <div className="flex items-center gap-3">
+                  <PlusIcon size={16} /> Add groups
+                </div>
+              </AccordionContent>
+              <Separator className="bg-neutral-300" />
+            </AccordionItem>
+            <AccordionItem value="Communities">
+              <AccordionTrigger className="uppercase">
+                Communities
+              </AccordionTrigger>
+              <AccordionContent className="">
+                <div className="flex items-center gap-3">
+                  <PlusIcon size={16} /> Add Communities
+                </div>
+              </AccordionContent>
+              <Separator className="bg-neutral-300" />
+            </AccordionItem>
+            <AccordionItem value="resources">
+              <AccordionTrigger className="uppercase">
+                Resources
+              </AccordionTrigger>
+              <AccordionContent className="">
+                <div className="flex items-center gap-3">
+                  <PlusIcon size={16} /> Add Resources
+                </div>
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
+        </div>
+      </ScrollArea>
     </div>
   );
 }

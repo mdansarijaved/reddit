@@ -20,7 +20,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="w-full bg-[#0e1113] flex justify-center items-center ">
+      <body className="w-full  flex justify-center items-center ">
         {children}
       </body>
     </html>

@@ -9,7 +9,7 @@ export default function LoginLayout({
   return (
     <div className="h-screen w-screen  flex">
       <div className="w-1/2 h-full p-10 flex flex-col justify-between items-start">
-        <div className="uppercase text-3xl  text-white">Reddit.</div>
+        <div className="uppercase text-3xl">Reddit.</div>
         <div className=" flex justify-center items-center  w-full">
           <Image
             src={"/illustration.svg"}
@@ -19,7 +19,7 @@ export default function LoginLayout({
             alt="Image"
           />
         </div>
-        <div className=" text-white">
+        <div className=" ">
           SignIn and start exploring the world of nerds and weirdos.
         </div>
       </div>

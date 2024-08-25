@@ -16,7 +16,7 @@ export default async function PostCard({
   posts: Posts & { User: User };
 }) {
   return (
-    <div className="text-white max-w-5xl w-[35rem] max-h-[35.4rem]  border-x border-gray-800 border-b hover:bg-[#131f23]  py-2 px-4">
+    <div className=" max-w-5xl w-[35rem] max-h-[35.4rem]  border-x border-gray-800 border-b hover:bg-[#131f23]  py-2 px-4">
       <div className="flex justify-between">
         <div className="flex items-center mt-1">
           <button className="flex items-center text-[0.8rem] text-[#c2dee7] hover:text-[#a7ccff] gap-1"></button>

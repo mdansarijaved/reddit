@@ -9,8 +9,17 @@ import { postSchema } from "@/schema/schema";
 import { createpost } from "@/app/actions/post";
 import { Form, FormControl, FormField, FormItem, FormLabel } from "../ui/form";
 import { Input } from "../ui/input";
-import { Textarea } from "../ui/textarea";
 import Tiptap from "./editor";
+import { Button } from "../ui/button";
+import {
+  Select,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+  SelectContent,
+  SelectGroup,
+  SelectLabel,
+} from "../ui/select";
 
 type postType = z.infer<typeof postSchema>;
 
@@ -24,7 +33,6 @@ function CreatePostForm() {
     resolver: zodResolver(postSchema),
   });
   const [selected, setSelected] = useState(" ");
-  const [wordcount, setwordcount] = useState(0);
   const [ImagesUrl, setImagesUrl] = useState<string[]>([]);
 
   useEffect(() => {
@@ -39,30 +47,35 @@ function CreatePostForm() {
     }
   };
   return (
-    <div className=" mx-10 md:mx-0 md:ml-10 lg:w-[45rem] md:w-[43rem]">
-      <div className="text-[#b7cad4] flex font-semibold justify-between items-center ">
+    <div className=" mx-10 md:mx-0 md:ml-10 lg:w-[45rem] md:w-[43rem] space-y-4">
+      <div className="text-neutral-600 flex font-semibold justify-between items-center ">
         <h1 className="text-2xl">Create post</h1>
-        <p className="text-sm px-4 py-2 hover:bg-[#333d42] rounded-full">
+        <Button variant={"ghost"} className="text-sm px-4 py-2  rounded-md">
           Drafts
-        </p>
+        </Button>
       </div>
-      <form
-        className="bg-[#333d42] flex mt-6 md:w-80 py-2 px-3 rounded-full items-center gap-2"
-        action="submit"
-      >
-        <Search size={20} className="text-white" />
-        <input
-          type="text"
-          placeholder="Select a community"
-          className="bg-[#333d42] outline-none text-white"
-        />
-      </form>
-      <div className="flex text-white mt-10 md:gap-2 text-sm">
+      <Select>
+        <SelectTrigger className="w-52 px-1 focus:ring-0">
+          <SelectValue placeholder="Select a commmunity" className="" />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectGroup>
+            <SelectLabel>communities</SelectLabel>
+            <SelectItem value="node">r/node</SelectItem>
+            <SelectItem value="noded">r/node</SelectItem>
+            <SelectItem value="nodes">r/node</SelectItem>
+            <SelectItem value="nodeq">r/node</SelectItem>
+            <SelectItem value="nodec">r/node</SelectItem>
+            <SelectItem value="nodeq">r/node</SelectItem>
+          </SelectGroup>
+        </SelectContent>
+      </Select>
+      <div className="flex mt-5 justify-start  md:gap-2 text-sm">
         {buttons.map((button) => (
           <button
             key={button.id}
             onClick={() => setSelected(button.id)}
-            className={`px-4 py-2 hover:bg-[#333d42] hover:rounded-full ${
+            className={` w-20 text-start py-2   ${
               selected === button.id
                 ? "underline underline-offset-8 decoration-[#648efc]"
                 : ""
@@ -85,7 +98,7 @@ function CreatePostForm() {
                     <Input
                       {...field}
                       type="text"
-                      className="bg-transparent border border-gray-700  "
+                      className="bg-transparent border border-neutral-300 focus-visible:ring-0 focus:outline-none  "
                     />
                   </FormControl>
                 </FormItem>
@@ -104,6 +117,9 @@ function CreatePostForm() {
               )}
             />
           </div>
+          <Button className="" variant={"outline"}>
+            Create
+          </Button>
         </form>
       </Form>
     </div>

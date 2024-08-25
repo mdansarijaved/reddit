@@ -1,16 +1,15 @@
-import { House } from "lucide";
+import { ScrollArea } from "@radix-ui/react-scroll-area";
 import { HouseIcon } from "lucide-react";
 import React from "react";
-import { Separator } from "../ui/separator";
-import Droptdown from "@/components/sidebar/dropdowm";
-import styles from "@/components/sidebar/dopdown.module.css";
 
 export default function RightBar() {
   return (
-    <div
-      className={`h-full overflow-y-scroll fixed max-h-screen top-0 right-0  z-10
-           lg:block  w-[350px] px-7  border-x border-gray-700  ${styles["custom-scrollbar"]}`}
-    ></div>
+    <div>
+      <ScrollArea
+        className={`h-full overflow-y-scroll fixed max-h-screen top-0 right-0  z-10
+           lg:block  w-[350px] px-7  border-x border-gray-700  `}
+      ></ScrollArea>
+    </div>
   );
 }
 

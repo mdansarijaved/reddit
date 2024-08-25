@@ -2,6 +2,7 @@ import React from "react";
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import Toolbar from "./toolbar";
+import BulletList from "@tiptap/extension-bullet-list";
 function Tiptap({
   body,
   onChange,
@@ -10,7 +11,7 @@ function Tiptap({
   onChange: (richText: string) => void;
 }) {
   const editor = useEditor({
-    extensions: [StarterKit.configure()],
+    extensions: [StarterKit.configure(), BulletList],
     content: body,
     editorProps: {
       attributes: {
@@ -23,7 +24,7 @@ function Tiptap({
     },
   });
   return (
-    <div className="w-full  border  border-gray-700 rounded">
+    <div className="w-full  border  border-neutral-300 rounded">
       <Toolbar editor={editor} />
       <EditorContent editor={editor} />
     </div>

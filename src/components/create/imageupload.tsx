@@ -51,7 +51,7 @@ function ImageUpload({
         id="fileinput"
         type="file"
         {...register("file")}
-        className="bg-transparent hidden  outline-none file:text-white border-none"
+        className="bg-transparent hidden  outline-none  border-none"
       />
       <button type="button" onClick={handleSubmit(handlePaste)}></button>
       <PaperclipIcon size={18} />

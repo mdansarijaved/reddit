@@ -1,8 +1,8 @@
 "use client";
-import React from "react";
+import React, { useCallback } from "react";
 import { type Editor } from "@tiptap/react";
 import { Toggle } from "../ui/toggle";
-import { Bold, Italic, Strikethrough } from "lucide-react";
+import { Bold, Image, Italic, List, Strikethrough } from "lucide-react";
 
 type EditorType = {
   editor: Editor | null;
@@ -11,7 +11,7 @@ function Toolbar({ editor }: EditorType) {
   if (!editor) return null;
 
   return (
-    <div className="border-b border-gray-700 bg-transparent ">
+    <div className="bg-transparent ">
       <Toggle
         size={"sm"}
         pressed={editor.isActive("heading")}
@@ -33,8 +33,14 @@ function Toolbar({ editor }: EditorType) {
       >
         <Strikethrough className="w-4 h-4" />
       </Toggle>
+      <Toggle
+        size={"sm"}
+        pressed={editor.isActive("bulletList")}
+        onPressedChange={() => editor.chain().focus().toggleBulletList().run()}
+      >
+        <List className="w-4 h-4" />
+      </Toggle>
     </div>
   );
 }
-
 export default Toolbar;

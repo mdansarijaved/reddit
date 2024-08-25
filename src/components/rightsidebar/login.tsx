@@ -7,7 +7,7 @@ export default async function AuthButton() {
   const user = await auth();
 
   return user ? (
-    <div className="flex items-center justify-center text-white gap-4">
+    <div className="flex items-center justify-center  gap-4">
       Hey, {user.user.email?.split("@")[0]}!
       <form
         action={async () => {
