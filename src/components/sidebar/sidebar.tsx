@@ -66,11 +66,7 @@ export default function SideBar() {
         </div>
         <Separator className="bg-neutral-300" />
         <div className="">
-          <Accordion
-            type="multiple"
-            collapsible
-            className="font-extralight text-sm"
-          >
+          <Accordion type="multiple" className="font-extralight text-sm">
             <AccordionItem value="groups">
               <AccordionTrigger className="uppercase ">Groups</AccordionTrigger>
               <AccordionContent className="">

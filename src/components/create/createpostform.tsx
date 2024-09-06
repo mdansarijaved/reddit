@@ -1,8 +1,8 @@
 "use client";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Search } from "lucide-react";
-import React, { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
+import { LoaderCircle } from "lucide-react";
+import React, { useCallback, useState } from "react";
+import { useController, useForm } from "react-hook-form";
 import * as z from "zod";
 import ImageUpload from "./imageupload";
 import { postSchema } from "@/schema/schema";
@@ -20,6 +20,11 @@ import {
   SelectGroup,
   SelectLabel,
 } from "../ui/select";
+import onUpload from "@/lib/image-upload";
+import Image from "next/image";
+import Link from "next/link";
+import { useToast } from "@/hooks/use-toast";
+import { ToastAction } from "../ui/toast";
 
 type postType = z.infer<typeof postSchema>;
 
@@ -31,17 +36,80 @@ function CreatePostForm() {
   ];
   const form = useForm<postType>({
     resolver: zodResolver(postSchema),
+    defaultValues: {
+      media: [],
+    },
   });
   const [selected, setSelected] = useState(" ");
-  const [ImagesUrl, setImagesUrl] = useState<string[]>([]);
+  const [isUploading, setIsUploading] = useState(false);
+  const [isDragging, setIsDragging] = useState(false);
+  const { field: mediaField } = useController({
+    name: "media",
+    control: form.control,
+  });
 
-  useEffect(() => {
-    form.setValue("media", ImagesUrl);
-  }, [ImagesUrl]);
+  const handleFileUpload = useCallback(
+    async (files: FileList) => {
+      setIsUploading(true);
+      try {
+        const uploadPromises = Array.from(files).map((file) => onUpload(file));
+        const uploadedUrls = await Promise.all(uploadPromises);
+        mediaField.onChange([...mediaField.value, ...uploadedUrls]);
+        setIsUploading(false);
+      } catch (error) {
+        console.error("Error uploading file:", error);
+        setIsUploading(false);
+        // Handle error (e.g., show error message to user)
+      }
+    },
+    [mediaField],
+  );
 
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const files = event.target.files;
+    if (files && files.length > 0) {
+      handleFileUpload(files);
+    }
+  };
+
+  const handleDrag = useCallback((e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+  }, []);
+
+  const handleDragIn = useCallback((e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(true);
+  }, []);
+
+  const handleDragOut = useCallback((e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(false);
+  }, []);
+
+  const handleDrop = useCallback(
+    (e: React.DragEvent) => {
+      e.preventDefault();
+      e.stopPropagation();
+      setIsDragging(false);
+
+      if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+        handleFileUpload(e.dataTransfer.files);
+      }
+    },
+    [handleFileUpload],
+  );
+  const { toast } = useToast();
   const onsubmit = async (postdata: postType) => {
     try {
-      await createpost(postdata);
+      const file = postdata.media[0];
+      console.log(file);
+      const message = await createpost(postdata);
+      toast({
+        title: message.message,
+      });
     } catch (error) {
       console.error(error);
     }
@@ -75,11 +143,10 @@ function CreatePostForm() {
           <button
             key={button.id}
             onClick={() => setSelected(button.id)}
-            className={` w-20 text-start py-2   ${
-              selected === button.id
+            className={` w-20 text-start py-2   ${selected === button.id
                 ? "underline underline-offset-8 decoration-[#648efc]"
                 : ""
-            } ${button.label === "Link" ? "text-muted-foreground" : ""}`}
+              } ${button.label === "Link" ? "text-muted-foreground" : ""}`}
           >
             {button.label}
           </button>
@@ -116,9 +183,82 @@ function CreatePostForm() {
                 </FormItem>
               )}
             />
+            <FormField
+              control={form.control}
+              name="media"
+              render={() => (
+                <FormItem>
+                  <FormLabel>Media</FormLabel>
+                  <FormControl>
+                    <div
+                      className={`border-2 border-dashed rounded-md p-4 text-center cursor-pointer ${isDragging
+                          ? "border-blue-500 bg-blue-50"
+                          : "border-gray-300"
+                        }`}
+                      onDragEnter={handleDragIn}
+                      onDragLeave={handleDragOut}
+                      onDragOver={handleDrag}
+                      onDrop={handleDrop}
+                    >
+                      <Input
+                        type="file"
+                        onChange={handleFileChange}
+                        className="hidden"
+                        id="file-upload"
+                      />
+
+                      <label
+                        htmlFor="file-upload"
+                        className={`cursor-pointer ${isUploading ? "" : "hidden"} `}
+                      >
+                        Uploading
+                      </label>
+                      <label
+                        htmlFor="file-upload"
+                        className={`cursor-pointer ${isUploading ? "hidden" : ""} `}
+                      >
+                        {isDragging
+                          ? "Drop the files here"
+                          : "Drag & Drop files here or click to select"}
+                      </label>
+                    </div>
+                  </FormControl>
+                  {mediaField.value.length > 0 && (
+                    <div>
+                      Uploaded files:
+                      <ul className="flex justify-start items-center border p-2 rounded-md gap-4">
+                        {mediaField.value.map((url, index) => (
+                          <Link href={url} target="_blank" key={url}>
+                            <Image
+                              src={url}
+                              width={100}
+                              height={100}
+                              className="rounded-md object-center object-cover w-[100px] h-[100px]"
+                              alt="uploaded-image"
+                            />
+                          </Link>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                </FormItem>
+              )}
+            />
           </div>
-          <Button className="" variant={"outline"}>
-            Create
+          {/* <div className="rounded-md border border-gray-500 w-full py-2 px-2"></div> */}
+          <Button
+            className=""
+            disabled={form.formState.isSubmitting}
+            variant={"outline"}
+          >
+            {form.formState.isSubmitting ? (
+              <span>
+                Posting
+                <LoaderCircle className="animate-spin" />
+              </span>
+            ) : (
+              "Create"
+            )}
           </Button>
         </form>
       </Form>
@@ -127,67 +267,3 @@ function CreatePostForm() {
 }
 
 export default CreatePostForm;
-
-{
-  /**
-
-    
-     
-      <form onSubmit={handleSubmit(onsubmit)}>
-        <div className="text-white mt-10 relative">
-          <textarea
-            {...register("title", { required: true })}
-            onChange={(e) => setwordcount(e.target.value.length)}
-            placeholder="Title*"
-            disabled={isSubmitting}
-            className={` bg-[#0e1113] border ${
-              wordcount > 300 ? "outline-red-500 " : "outline-none "
-            }   text-sm py-4 px-4 rounded-2xl w-full border-[#3e4142] custom-scrollbar-global`}
-          />
-          <div className="flex justify-between items-center px-3">
-            {errors.title && (
-              <span className="text-xs font-semibold">Title is required</span>
-            )}
-            <p className="text-[0.7rem]  mt-1">{wordcount}/300</p>
-          </div>
-
-          <button
-            disabled
-            className="text-[#525456] text-[0.8rem] mt-10 px-4 py-2 bg-[#1a1d1f] rounded-full font-semibold"
-          >
-            Add tags
-          </button>
-
-          <div className="border rounded-xl overflow-hidden flex flex-col gap-2 border-gray-700 mt-5">
-            <textarea
-              placeholder="Body"
-              {...register("body", { required: true })}
-              className="bg-[#0e1113] outline-none focus:outline-none focus:border-none border-none text-white text-sm px-4 py-4 border w-full min-h-40 "
-            ></textarea>
-            <ImageUpload setImagesUrl={setImagesUrl} ImagesUrl={ImagesUrl} />
-          </div>
-          {errors.body && (
-            <span className="text-xs font-semibold">Body is required</span>
-          )}
-        </div>
-        <div
-          className={`flex gap-4 text-white mt-2 text-sm font-semibold justify-end`}
-        >
-          <button
-            type="button"
-            className="bg-[#104ca7] py-2 px-4 rounded-full hover:bg-[#1870f4]"
-          >
-            Save Draft
-          </button>
-          <button
-            type="submit"
-            className="bg-[#104ca7] py-2 px-4 rounded-full hover:bg-[#1870f4]"
-          >
-            Post
-          </button>
-        </div>
-      </form>
-      <div></div>
-  
-  */
-}

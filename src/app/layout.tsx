@@ -1,10 +1,8 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import SideBar from "@/components/sidebar/sidebar";
-import Navbar from "@/components/navbar/navbar";
 import "@radix-ui/themes/styles.css";
-import RightBar from "@/components/rightsidebar/rightsidebar";
+import { Toaster } from "@/components/ui/toaster";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,7 +19,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="w-full  flex justify-center items-center ">
-        {children}
+        <main>{children}</main>
+        <Toaster />
       </body>
     </html>
   );

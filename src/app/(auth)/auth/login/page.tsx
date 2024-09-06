@@ -87,7 +87,7 @@ function LoginForm() {
               />
             </div>
             {error && (
-              <div className="py-2 text-center w-full bg-destructive/15">
+              <div className="py-1 rounded text-sm text-center w-full bg-destructive/15">
                 {error}
               </div>
             )}

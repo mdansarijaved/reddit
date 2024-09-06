@@ -13,21 +13,30 @@ import {
   DropdownMenuTrigger,
   DropdownMenuGroup,
   DropdownMenuPortal,
-  DropdownMenuShortcut,
   DropdownMenuSub,
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
 } from "../ui/dropdown-menu";
-import { Button } from "../ui/button";
 
 export default async function AuthButton() {
   const user = await auth();
+  console.log(user);
+  if (!user) {
+    return (
+      <Link
+        href="/auth/login"
+        className="py-2 px-2 flex rounded-md no-underline bg-btn-background hover:bg-btn-background-hover"
+      >
+        <CircleUserRound />
+      </Link>
+    );
+  }
 
-  return user ? (
+  return (
     <div className="flex items-center justify-center  gap-4">
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          {user.user.image ? (
+          {user.user && user.user.image ? (
             <Image
               src={user.user.image}
               height={100}
@@ -84,12 +93,5 @@ export default async function AuthButton() {
         </DropdownMenuContent>
       </DropdownMenu>
     </div>
-  ) : (
-    <Link
-      href="/auth/login"
-      className="py-2 px-2 flex rounded-md no-underline bg-btn-background hover:bg-btn-background-hover"
-    >
-      <CircleUserRound />
-    </Link>
   );
 }
