@@ -5,10 +5,13 @@ import React, { ReactNode } from "react";
 
 function HomeLayout({ children }: { children: ReactNode }) {
   return (
-    <div>
+    <div className="h-full">
       <Navbar />
-      <SideBar />
-      <div className="relative w-full max-w-5xl  p-16   ">{children}</div>
+      <div className="relative flex justify-start w-full  min-h-screen  ">
+        <SideBar />
+        {children}
+        <SideBar />
+      </div>
     </div>
   );
 }

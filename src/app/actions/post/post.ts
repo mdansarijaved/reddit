@@ -19,7 +19,7 @@ export const createpost = async (postdata: z.infer<typeof postSchema>) => {
                 title,
                 body,
                 media,
-                userId: userId,
+                userId: userId!,
             },
         });
         if (!post) {

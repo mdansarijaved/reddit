@@ -4,9 +4,8 @@ import { LoaderCircle } from "lucide-react";
 import React, { useCallback, useState } from "react";
 import { useController, useForm } from "react-hook-form";
 import * as z from "zod";
-import ImageUpload from "./imageupload";
 import { postSchema } from "@/schema/schema";
-import { createpost } from "@/app/actions/post";
+import { createpost } from "@/app/actions/post/post";
 import { Form, FormControl, FormField, FormItem, FormLabel } from "../ui/form";
 import { Input } from "../ui/input";
 import Tiptap from "./editor";
@@ -24,7 +23,6 @@ import onUpload from "@/lib/image-upload";
 import Image from "next/image";
 import Link from "next/link";
 import { useToast } from "@/hooks/use-toast";
-import { ToastAction } from "../ui/toast";
 
 type postType = z.infer<typeof postSchema>;
 
@@ -59,10 +57,9 @@ function CreatePostForm() {
       } catch (error) {
         console.error("Error uploading file:", error);
         setIsUploading(false);
-        // Handle error (e.g., show error message to user)
       }
     },
-    [mediaField],
+    [mediaField]
   );
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -99,7 +96,7 @@ function CreatePostForm() {
         handleFileUpload(e.dataTransfer.files);
       }
     },
-    [handleFileUpload],
+    [handleFileUpload]
   );
   const { toast } = useToast();
   const onsubmit = async (postdata: postType) => {
@@ -143,10 +140,11 @@ function CreatePostForm() {
           <button
             key={button.id}
             onClick={() => setSelected(button.id)}
-            className={` w-20 text-start py-2   ${selected === button.id
+            className={` w-20 text-start py-2   ${
+              selected === button.id
                 ? "underline underline-offset-8 decoration-[#648efc]"
                 : ""
-              } ${button.label === "Link" ? "text-muted-foreground" : ""}`}
+            } ${button.label === "Link" ? "text-muted-foreground" : ""}`}
           >
             {button.label}
           </button>
@@ -191,10 +189,11 @@ function CreatePostForm() {
                   <FormLabel>Media</FormLabel>
                   <FormControl>
                     <div
-                      className={`border-2 border-dashed rounded-md p-4 text-center cursor-pointer ${isDragging
+                      className={`border-2 border-dashed rounded-md p-4 text-center cursor-pointer ${
+                        isDragging
                           ? "border-blue-500 bg-blue-50"
                           : "border-gray-300"
-                        }`}
+                      }`}
                       onDragEnter={handleDragIn}
                       onDragLeave={handleDragOut}
                       onDragOver={handleDrag}
@@ -209,13 +208,17 @@ function CreatePostForm() {
 
                       <label
                         htmlFor="file-upload"
-                        className={`cursor-pointer ${isUploading ? "" : "hidden"} `}
+                        className={`cursor-pointer ${
+                          isUploading ? "" : "hidden"
+                        } `}
                       >
                         Uploading
                       </label>
                       <label
                         htmlFor="file-upload"
-                        className={`cursor-pointer ${isUploading ? "hidden" : ""} `}
+                        className={`cursor-pointer ${
+                          isUploading ? "hidden" : ""
+                        } `}
                       >
                         {isDragging
                           ? "Drop the files here"
@@ -245,7 +248,6 @@ function CreatePostForm() {
               )}
             />
           </div>
-          {/* <div className="rounded-md border border-gray-500 w-full py-2 px-2"></div> */}
           <Button
             className=""
             disabled={form.formState.isSubmitting}

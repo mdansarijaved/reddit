@@ -12,7 +12,7 @@ import AuthButton from "./login";
 
 export default function Navbar() {
   return (
-    <div className="w-full flex justify-between fixed top-0 left-0 border-b bg-white   border-x border-neutral-300  z-20  py-2  items-center px-6">
+    <div className="w-full flex justify-between fixed  top-0 left-0 border-b bg-white   border-x border-neutral-300  z-20  py-2  items-center px-6">
       <div className="flex">
         <button className="lg:hidden mr-4">
           <Menu size={24} />

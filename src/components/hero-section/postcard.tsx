@@ -4,7 +4,7 @@ import { TbArrowBigUp, TbArrowBigDown } from "react-icons/tb";
 import { GoComment } from "react-icons/go";
 import { LiaMedalSolid } from "react-icons/lia";
 import { RiShareForwardLine } from "react-icons/ri";
-import { Posts, User } from "@prisma/client";
+import { Likedby, Posts, User } from "@prisma/client";
 import {
   Carousel,
   CarouselContent,
@@ -12,16 +12,25 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "../ui/carousel";
+import { handleLikes } from "@/app/actions/likes";
+import Link from "next/link";
+import { Session } from "next-auth";
+import { likes, post, user } from "@/types/post";
+import isLikedbyUser from "@/lib/post/likedByUser";
 
 export default async function PostCard({
   posts,
+  user,
 }: {
-  posts: Posts & { User: User };
+  posts: post;
+  user: Session | null;
 }) {
+  const isLiked = await isLikedbyUser(posts);
+
   return (
-    <div className=" max-w-5xl w-[35rem] max-h-[35.4rem]  border-x border-b  py-2 px-4">
+    <div className="max-w-5xl w-[700px] max-h-[35.4rem] border-x border-b py-2 px-4">
       <div className="flex justify-between">
-        <div className="flex gap-2  items-center mt-1">
+        <div className="flex gap-2 items-center mt-1">
           <div className="w-6 h-6 rounded-full bg-green-500 "></div>
           <p className="text-muted-foreground text-sm font-bold ">
             {posts.User.name}
@@ -32,7 +41,9 @@ export default async function PostCard({
           <BsThreeDots className="font-thin" />
         </button>
       </div>
-      <h1 className="mt-1 text-lg">{posts.title}</h1>
+      <Link href={`/post/${posts.id}`}>
+        <h1 className="mt-1 text-lg">{posts.title}</h1>
+      </Link>
       <Carousel className="w-full ">
         <CarouselContent>
           {posts.media &&
@@ -53,14 +64,23 @@ export default async function PostCard({
         <CarouselNext />
       </Carousel>
       <div className="flex mt-2 gap-4 items-center">
-        <div className={`flex items-center  rounded-full p-2`}>
-          <button className="flex items-center gap-1 hover:text-green-400">
-            <TbArrowBigUp size={19} />
-          </button>
-          <p className=" text-[0.8rem] font-medium px-3">8</p>
-          <button className="flex items-center gap-1 hover:text-red-900">
-            <TbArrowBigDown size={19} />
-          </button>
+        <div className={`flex items-center rounded-full p-2`}>
+          <form
+            action={async () => {
+              "use server";
+              await handleLikes(posts.id);
+            }}
+          >
+            <button>
+              <TbArrowBigUp
+                className={`flex items-center gap-1 ${
+                  isLiked ? "text-green-500 fill-green-500" : "text-gray-500"
+                }`}
+                size={19}
+              />
+            </button>
+          </form>
+          <p className="text-[0.8rem] font-medium px-3">{posts.likes.length}</p>
         </div>
         <button className="flex items-center text-[0.8rem] font-medium gap-2 py-2 rounded-full px-3 ">
           <GoComment size={16} />
@@ -69,7 +89,7 @@ export default async function PostCard({
         <button className="py-2 rounded-full px-3 ">
           <LiaMedalSolid size={19} />
         </button>
-        <button className="flex items-center text-[0.8rem]  font-medium gap-2 py-2 rounded-full px-3 ">
+        <button className="flex items-center text-[0.8rem] font-medium gap-2 py-2 rounded-full px-3 ">
           <RiShareForwardLine size={18} />
           Share
         </button>

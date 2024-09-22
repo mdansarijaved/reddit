@@ -1,10 +1,4 @@
-import {
-  AlignLeft,
-  HouseIcon,
-  Plus,
-  PlusIcon,
-  SearchSlashIcon,
-} from "lucide-react";
+import { AlignLeft, HouseIcon, PlusIcon, SearchSlashIcon } from "lucide-react";
 import React from "react";
 import {
   Accordion,
@@ -14,19 +8,19 @@ import {
 } from "@/components/ui/accordion";
 import { Separator } from "../ui/separator";
 import { ScrollArea } from "../ui/scroll-area";
-import { Button, buttonVariants } from "../ui/button";
+import { buttonVariants } from "../ui/button";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
-import { RiCommunityFill } from "react-icons/ri";
 import { GoPeople } from "react-icons/go";
+import Communities from "./community";
 export default function SideBar() {
   return (
     <div
-      className="fixed   bottom-0 pt-14 left-0 h-full  z-10 text-neutral-500
+      className=" hidden min-h-screen sticky h-full top-0 pt-0 left-0   z-10 text-neutral-500
            lg:block w-full max-w-72 px-4  border-x  border-gray-300"
     >
-      <ScrollArea className={`h-[calc(100vh - 100px)] `}>
-        <div className=" text-sm py-4  w-full">
+      <ScrollArea className={`min-h-screen  pt-14 `}>
+        <div className=" text-sm py-4  w-full ">
           <Link
             href={"/"}
             className={cn(
@@ -76,17 +70,7 @@ export default function SideBar() {
               </AccordionContent>
               <Separator className="bg-neutral-300" />
             </AccordionItem>
-            <AccordionItem value="Communities">
-              <AccordionTrigger className="uppercase">
-                Communities
-              </AccordionTrigger>
-              <AccordionContent className="">
-                <div className="flex items-center gap-3">
-                  <PlusIcon size={16} /> Add Communities
-                </div>
-              </AccordionContent>
-              <Separator className="bg-neutral-300" />
-            </AccordionItem>
+            <Communities />
             <AccordionItem value="resources">
               <AccordionTrigger className="uppercase">
                 Resources

@@ -1,25 +1,32 @@
-import { auth, signOut } from "@/auth";
-import Section from "@/components/hero-section/mainsection";
+import { auth } from "@/auth";
 import PostCard from "@/components/hero-section/postcard";
-import { Button } from "@/components/ui/button";
 import { db } from "@/lib/db";
 export default async function Home() {
   const posts = await db.posts.findMany({
     include: {
-      User: true,
+      User: {
+        select: {
+          id: true,
+          name: true,
+        },
+      },
+      likes: {
+        select: {
+          id: true,
+          userid: true,
+        },
+      },
     },
   });
   if (!posts) {
     return <div>There are no posts</div>;
   }
   const user = await auth();
-  console.log(user);
   return (
-    <main className={`relative w-full  `}>
-      <Section />
-      <div className="w-full">
+    <main className={`relative w-full pt-14 flex justify-center `}>
+      <div className=" ">
         {posts.map((post) => (
-          <PostCard posts={post} key={post.id} />
+          <PostCard posts={post} key={post.id} user={user} />
         ))}
       </div>
     </main>

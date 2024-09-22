@@ -85,18 +85,20 @@ model TwoFactorConfirmation {
 }
 
 model Posts {
-  id        String    @id @default(cuid())
-  title     String
-  body      String
-  media     String[]
-  userId    String
-  likes     Likedby[]
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @default(now())
-  User      User      @relation(fields: [userId], references: [id])
-  parentId  String?
-  parent    Posts?    @relation("PostToPost", fields: [parentId], references: [id])
-  children  Posts[]   @relation("PostToPost")
+  id          String     @id @default(cuid())
+  title       String
+  body        String
+  media       String[]
+  userId      String
+  likes       Likedby[]
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @default(now())
+  User        User       @relation(fields: [userId], references: [id])
+  parentId    String?
+  parent      Posts?     @relation("PostToPost", fields: [parentId], references: [id])
+  children    Posts[]    @relation("PostToPost")
+  Community   Community? @relation(fields: [communityId], references: [id])
+  communityId String?
 }
 
 model Likedby {
@@ -113,6 +115,12 @@ model Likedby {
 model Community {
   id             String    @id @default(cuid())
   community_name String
+  icon           String
+  banner         String
+  topics         String[]
+  mature         Boolean   @default(false)
+  description    String
+  posts          Posts[]
   AdminId        String
   user           User      @relation(fields: [AdminId], references: [id])
   members        Members[]
