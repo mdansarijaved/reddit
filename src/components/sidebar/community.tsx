@@ -1,5 +1,4 @@
 "use client";
-
 import React, { useState } from "react";
 import { useForm, useFieldArray } from "react-hook-form";
 import { z } from "zod";
@@ -30,26 +29,7 @@ import {
 } from "../ui/dialog";
 import { PlusIcon, X } from "lucide-react";
 import { Input } from "../ui/input";
-
-const communitySchema = z.object({
-  community_name: z
-    .string()
-    .min(1, {
-      message: "name is required",
-    })
-    .max(30),
-  icon: z.instanceof(File).optional(),
-  banner: z.instanceof(File).optional(),
-  topics: z.array(z.string()).min(1, "At least one topic is required"),
-  mature: z.boolean().default(false),
-  description: z
-    .string()
-    .min(5, {
-      message: "description is required",
-    })
-    .max(300),
-  AdminId: z.string().min(1),
-});
+import { communitySchema } from "@/schema/schema";
 
 type CommunityType = z.infer<typeof communitySchema>;
 
@@ -57,31 +37,17 @@ function Communities() {
   const form = useForm<CommunityType>({
     resolver: zodResolver(communitySchema),
     defaultValues: {
+      banner: "",
+      icon: "",
       community_name: "",
       mature: false,
-      topics: [""],
       description: "",
       AdminId: "default-admin-id",
     },
   });
 
-  const { fields, append, remove } = useFieldArray({
-    control: form.control,
-    name: "topics" as never,
-  });
-
-  const [newTopic, setNewTopic] = useState("");
-
   const onSubmit = (data: CommunityType) => {
     console.log("Form submitted:", data);
-  };
-
-  const handleAddTopic = () => {
-    if (newTopic.trim()) {
-      console.log(newTopic.trim());
-      append(newTopic.trim());
-      setNewTopic("");
-    }
   };
 
   return (
@@ -91,9 +57,9 @@ function Communities() {
         <AccordionContent className="">
           <Dialog>
             <DialogTrigger asChild>
-              <Button variant="outline" className="flex items-center gap-3">
+              <button className="flex w-full items-center gap-3">
                 <PlusIcon size={16} /> Add Communities
-              </Button>
+              </button>
             </DialogTrigger>
             <DialogContent className="max-w-3xl">
               <DialogHeader>
@@ -162,36 +128,7 @@ function Communities() {
                         )}
                       />
                     </div>
-                    <FormField
-                      control={form.control}
-                      name="topics"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Topics</FormLabel>
-                          <FormControl>
-                            <div className="flex flex-col space-y-2">
-                              <div className="flex space-x-2">
-                                <Input
-                                  type="text"
-                                  value={newTopic}
-                                  onChange={(e) => setNewTopic(e.target.value)}
-                                  placeholder="Add a topic"
-                                />
-                                <Button type="button" onClick={handleAddTopic}>
-                                  Add
-                                </Button>
-                              </div>
-                              <div>
-                                {fields.map((field) => (
-                                  <span key={field.id}>{field}</span>
-                                ))}
-                              </div>
-                            </div>
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
+
                     <FormField
                       control={form.control}
                       name="description"
@@ -209,28 +146,31 @@ function Communities() {
                         </FormItem>
                       )}
                     />
-                    <FormField
-                      control={form.control}
-                      name="mature"
-                      render={({ field }) => (
-                        <FormItem className="flex justify-center items-center gap-4 border rounded-lg p-2">
-                          <div>
-                            <FormLabel>Mature</FormLabel>
-                            <FormDescription>
-                              Content for adults only
-                            </FormDescription>
-                          </div>
-                          <FormControl>
-                            <Switch
-                              checked={field.value}
-                              onCheckedChange={field.onChange}
-                            />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                    <Button type="submit">Submit</Button>
+                    <div className="flex justify-between items-end">
+                      <FormField
+                        control={form.control}
+                        name="mature"
+                        render={({ field }) => (
+                          <FormItem className="flex justify-center items-center gap-4 border rounded-lg p-2">
+                            <div>
+                              <FormLabel>Mature</FormLabel>
+                              <FormDescription>
+                                Content for adults only
+                              </FormDescription>
+                            </div>
+                            <FormControl>
+                              <Switch
+                                checked={field.value}
+                                onCheckedChange={field.onChange}
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      <Button type="button">Preview</Button>
+                      <Button type="submit">Submit</Button>
+                    </div>
                   </form>
                 </Form>
               </div>

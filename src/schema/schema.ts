@@ -20,8 +20,7 @@ export const postSchema = z.object({
   body: z.string().min(1),
   media: z.string().array(),
 });
-const MAX_UPLOAD_SIZE = 1024 * 1024 * 3; // 3MB
-const ACCEPTED_FILE_TYPES = ["image/png"];
+
 export const communitySchema = z.object({
   community_name: z
     .string()
@@ -29,9 +28,9 @@ export const communitySchema = z.object({
       message: "name is required",
     })
     .max(30),
-  icon: z.instanceof(File).optional(),
-  banner: z.instanceof(File).optional(),
-  topics: z.array(z.string()).min(1, "Atleast one tag required"),
+  icon: z.string(),
+  banner: z.string(),
+  // topics: z.array(z.string()).min(1, "Atleast one tag required"),
   mature: z.boolean().default(false),
   description: z
     .string()
