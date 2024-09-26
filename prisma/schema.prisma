@@ -90,6 +90,7 @@ model Posts {
   body        String
   media       String[]
   userId      String
+  slug        String
   likes       Likedby[]
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @default(now())
@@ -117,6 +118,7 @@ model Community {
   community_name String
   icon           String
   banner         String
+  slug           String
   topics         String[]
   mature         Boolean   @default(false)
   description    String

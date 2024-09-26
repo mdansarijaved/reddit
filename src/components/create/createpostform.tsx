@@ -1,7 +1,7 @@
 "use client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LoaderCircle } from "lucide-react";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useController, useForm } from "react-hook-form";
 import * as z from "zod";
 import { postSchema } from "@/schema/schema";
@@ -23,10 +23,11 @@ import onUpload from "@/lib/image-upload";
 import Image from "next/image";
 import Link from "next/link";
 import { useToast } from "@/hooks/use-toast";
+import { Session } from "next-auth";
 
 type postType = z.infer<typeof postSchema>;
 
-function CreatePostForm() {
+function CreatePostForm({ user }: { user: Session }) {
   const buttons = [
     { id: "post", label: "Post" },
     { id: "link", label: "Link" },
@@ -36,6 +37,8 @@ function CreatePostForm() {
     resolver: zodResolver(postSchema),
     defaultValues: {
       media: [],
+      body: "write something",
+      title: "write something",
     },
   });
   const [selected, setSelected] = useState(" ");
@@ -45,12 +48,14 @@ function CreatePostForm() {
     name: "media",
     control: form.control,
   });
-
+  const user_name: string = user?.user?.name ?? "defaultUserName";
   const handleFileUpload = useCallback(
     async (files: FileList) => {
       setIsUploading(true);
       try {
-        const uploadPromises = Array.from(files).map((file) => onUpload(file));
+        const uploadPromises = Array.from(files).map((file) =>
+          onUpload(file, "something", user_name)
+        );
         const uploadedUrls = await Promise.all(uploadPromises);
         mediaField.onChange([...mediaField.value, ...uploadedUrls]);
         setIsUploading(false);
@@ -99,10 +104,13 @@ function CreatePostForm() {
     [handleFileUpload]
   );
   const { toast } = useToast();
+  useEffect(() => {
+    if (form.formState.isSubmitSuccessful) {
+      form.reset();
+    }
+  }, [form.formState, form.reset]);
   const onsubmit = async (postdata: postType) => {
     try {
-      const file = postdata.media[0];
-      console.log(file);
       const message = await createpost(postdata);
       toast({
         title: message.message,
@@ -112,7 +120,7 @@ function CreatePostForm() {
     }
   };
   return (
-    <div className=" mx-10 md:mx-0 md:ml-10 lg:w-[45rem] md:w-[43rem] space-y-4">
+    <div className=" mx-10   lg:w-[45rem] md:w-[43rem] pt-16   space-y-4">
       <div className="text-neutral-600 flex font-semibold justify-between items-center ">
         <h1 className="text-2xl">Create post</h1>
         <Button variant={"ghost"} className="text-sm px-4 py-2  rounded-md">

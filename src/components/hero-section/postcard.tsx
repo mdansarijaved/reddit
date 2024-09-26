@@ -44,10 +44,10 @@ export default async function PostCard({
       <Link href={`/post/${posts.id}`}>
         <h1 className="mt-1 text-lg">{posts.title}</h1>
       </Link>
-      <Carousel className="w-full ">
-        <CarouselContent>
-          {posts.media &&
-            posts.media.map((media, index) => (
+      {posts.media.length > 0 ? (
+        <Carousel className="w-full ">
+          <CarouselContent>
+            {posts.media.map((media, index) => (
               <CarouselItem key={index}>
                 <Image
                   alt="hey"
@@ -59,10 +59,17 @@ export default async function PostCard({
                 />
               </CarouselItem>
             ))}
-        </CarouselContent>
-        <CarouselPrevious />
-        <CarouselNext />
-      </Carousel>
+          </CarouselContent>
+          <CarouselPrevious />
+          <CarouselNext />
+        </Carousel>
+      ) : (
+        <div
+          className="w-full line-clamp-3 text-muted-foreground"
+          dangerouslySetInnerHTML={{ __html: posts?.body || "" }}
+        ></div>
+      )}
+
       <div className="flex mt-2 gap-4 items-center">
         <div className={`flex items-center rounded-full p-2`}>
           <form

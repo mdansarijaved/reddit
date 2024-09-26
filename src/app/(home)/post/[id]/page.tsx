@@ -23,7 +23,7 @@ export default async function Page({ params }: { params: { id: string } }) {
     const isLiked = await isLikedbyUser(post);
     return (
       <>
-        <div className="max-w-5xl w-full  border-x border-b  py-2 px-4">
+        <div className="max-w-5xl w-full  border-x border-b  pt-16 px-4">
           <div className="flex justify-between">
             <div className="flex gap-2  items-center mt-1">
               <div className="w-6 h-6 rounded-full bg-green-500 "></div>

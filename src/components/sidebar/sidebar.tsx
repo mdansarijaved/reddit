@@ -13,7 +13,11 @@ import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { GoPeople } from "react-icons/go";
 import Communities from "./community";
-export default function SideBar() {
+import { auth } from "@/auth";
+
+export default async function SideBar() {
+  const user = await auth();
+
   return (
     <div
       className=" hidden min-h-screen sticky h-full top-0 pt-0 left-0   z-10 text-neutral-500
@@ -70,7 +74,7 @@ export default function SideBar() {
               </AccordionContent>
               <Separator className="bg-neutral-300" />
             </AccordionItem>
-            <Communities />
+            <Communities user={user} />
             <AccordionItem value="resources">
               <AccordionTrigger className="uppercase">
                 Resources
