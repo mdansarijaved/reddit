@@ -1,8 +1,35 @@
 "use server";
 
+import { auth } from "@/auth";
+import { db } from "@/lib/db";
 import { communitySchema } from "@/schema/schema";
+import { nanoid } from "nanoid";
+import { toast } from "sonner";
 import * as z from "zod";
 
-export const createCommunity = (data: z.infer<typeof communitySchema>) => {
+export const createCommunity = async (
+  data: z.infer<typeof communitySchema>
+) => {
   const validatedata = communitySchema.safeParse(data);
+  const user = await auth();
+  if (!user) {
+    return;
+  }
+  if (!validatedata.success) {
+    toast.error("error while parsing data");
+  }
+  try {
+    const slugName = data.community_name.replace(/[^a-zA-Z0-9.]/g, "+");
+    const hash = nanoid(5);
+    const slugname = `${slugName}${hash}`;
+    await db.community.create({
+      data: {
+        ...data,
+        AdminId: user.user.id,
+        slug: slugname,
+      },
+    });
+  } catch (e) {
+    console.log(e);
+  }
 };

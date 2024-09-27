@@ -8,9 +8,9 @@ function HomeLayout({ children }: { children: ReactNode }) {
   return (
     <div className="h-full">
       <Navbar />
-      <div className="relative flex justify-start w-full  min-h-screen  ">
+      <div className="relative flex justify-between w-full  min-h-screen  ">
         <SideBar />
-        {children}
+        <div className="pt-14">{children}</div>
         <SideBar />
         <Toaster />
       </div>

@@ -14,10 +14,11 @@ import { cn } from "@/lib/utils";
 import { GoPeople } from "react-icons/go";
 import Communities from "./community";
 import { auth } from "@/auth";
+import { db } from "@/lib/db";
 
 export default async function SideBar() {
   const user = await auth();
-
+  const communities = await db.community.findMany();
   return (
     <div
       className=" hidden min-h-screen sticky h-full top-0 pt-0 left-0   z-10 text-neutral-500
@@ -74,7 +75,7 @@ export default async function SideBar() {
               </AccordionContent>
               <Separator className="bg-neutral-300" />
             </AccordionItem>
-            <Communities user={user} />
+            <Communities user={user} communities={communities} />
             <AccordionItem value="resources">
               <AccordionTrigger className="uppercase">
                 Resources

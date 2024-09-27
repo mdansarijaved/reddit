@@ -41,7 +41,7 @@ export default async function PostCard({
           <BsThreeDots className="font-thin" />
         </button>
       </div>
-      <Link href={`/post/${posts.id}`}>
+      <Link href={`/post/${posts.slug}`}>
         <h1 className="mt-1 text-lg">{posts.title}</h1>
       </Link>
       {posts.media.length > 0 ? (

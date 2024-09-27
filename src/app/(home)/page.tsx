@@ -23,7 +23,7 @@ export default async function Home() {
   }
   const user = await auth();
   return (
-    <main className={`relative w-full pt-14 flex justify-center `}>
+    <main className={`relative w-full  flex justify-center `}>
       <div className=" ">
         {posts.map((post) => (
           <PostCard posts={post} key={post.id} user={user} />

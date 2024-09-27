@@ -1,5 +1,5 @@
 "use client";
-import React, { ChangeEvent, useState } from "react";
+import React, { ChangeEvent, useRef, useState } from "react";
 import { useForm, useFieldArray, useController } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -34,15 +34,27 @@ import { Session } from "next-auth";
 import { redirect } from "next/navigation";
 import onUpload from "@/lib/image-upload";
 import Image from "next/image";
+import { createCommunity } from "@/app/actions/community/createcommunity";
+import { Community } from "@prisma/client";
+import Link from "next/link";
 
 type CommunityType = z.infer<typeof communitySchema>;
 
-function Communities({ user }: { user: Session | null }) {
+function Communities({
+  user,
+  communities,
+}: {
+  user: Session | null;
+  communities: Community[];
+}) {
   if (!user?.user) {
-    redirect("/auth/login");
+    return;
   }
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
   const user_name = user.user.name;
   const [preview, setPreview] = useState(false);
+  const iconRef = useRef<React.ElementRef<typeof Input>>(null);
+  const bannerRef = useRef<React.ElementRef<typeof Input>>(null);
 
   const form = useForm<CommunityType>({
     resolver: zodResolver(communitySchema),
@@ -52,7 +64,6 @@ function Communities({ user }: { user: Session | null }) {
       community_name: "",
       mature: false,
       description: "",
-      AdminId: user.user.id,
     },
   });
   const [isUploading, setIsUploading] = useState(false);
@@ -69,12 +80,13 @@ function Communities({ user }: { user: Session | null }) {
     if (files && files.length > 0) {
       setIsUploading(true);
       try {
-        const uploadPromises = Array.from(files).map((file) =>
-          onUpload(file, form.getValues("community_name"), user_name || "")
+        const uploadPromises = await onUpload(
+          files[0],
+          form.getValues("community_name"),
+          user_name || ""
         );
-        const uploadedUrls = await Promise.all(uploadPromises);
-        // Assuming you only want the first uploaded URL
-        iconField.onChange(uploadedUrls[0]);
+        const uploadedUrls = await uploadPromises;
+        iconField.onChange(uploadedUrls);
         setIsUploading(false);
       } catch (error) {
         console.error("Error uploading file:", error);
@@ -88,11 +100,13 @@ function Communities({ user }: { user: Session | null }) {
     setIsUploading(true);
     if (files && files.length > 0) {
       try {
-        const uploadPromises = Array.from(files).map((file) =>
-          onUpload(file, form.getValues("community_name"), user_name || "")
+        const uploadPromises = await onUpload(
+          files[0],
+          form.getValues("community_name"),
+          user_name || ""
         );
-        const uploadedUrls = await Promise.all(uploadPromises);
-        bannerfield.onChange(uploadedUrls[0]);
+        const uploadedUrls = await uploadPromises;
+        bannerfield.onChange(uploadedUrls);
         setIsUploading(false);
       } catch (error) {
         console.error("Error uploading file:", error);
@@ -100,9 +114,17 @@ function Communities({ user }: { user: Session | null }) {
       }
     }
   };
-  const onSubmit = (data: CommunityType) => {
+  const onSubmit = async (data: CommunityType) => {
     console.log("Form submitted:", data);
+    await createCommunity(data);
+    if (bannerRef.current) {
+      bannerRef.current.value = "";
+    }
+    if (iconRef.current) {
+      iconRef.current.value = "";
+    }
     form.reset();
+    setIsDialogOpen(false);
   };
 
   return (
@@ -110,7 +132,10 @@ function Communities({ user }: { user: Session | null }) {
       <AccordionItem value="Communities">
         <AccordionTrigger className="uppercase">Communities</AccordionTrigger>
         <AccordionContent className="">
-          <Dialog>
+          <Dialog
+            open={isDialogOpen}
+            onOpenChange={() => setIsDialogOpen(!isDialogOpen)}
+          >
             <DialogTrigger asChild>
               <button className="flex w-full items-center gap-3">
                 <PlusIcon size={16} /> Add Communities
@@ -153,7 +178,11 @@ function Communities({ user }: { user: Session | null }) {
                           <FormItem className="w-1/2">
                             <FormLabel>Icon</FormLabel>
                             <FormControl>
-                              <Input type="file" onChange={iconUpload} />
+                              <Input
+                                type="file"
+                                ref={iconRef}
+                                onChange={iconUpload}
+                              />
                             </FormControl>
                             <FormMessage />
                           </FormItem>
@@ -166,14 +195,17 @@ function Communities({ user }: { user: Session | null }) {
                           <FormItem className="w-1/2">
                             <FormLabel>Banner</FormLabel>
                             <FormControl>
-                              <Input type="file" onChange={bannerupload} />
+                              <Input
+                                type="file"
+                                ref={bannerRef}
+                                onChange={bannerupload}
+                              />
                             </FormControl>
                             <FormMessage />
                           </FormItem>
                         )}
                       />
                     </div>
-
                     <FormField
                       control={form.control}
                       name="description"
@@ -269,6 +301,26 @@ function Communities({ user }: { user: Session | null }) {
               </div>
             </DialogContent>
           </Dialog>
+          <div className="space-y-3 pt-3">
+            {communities.map((community, index) => (
+              <Link
+                href={`/community/${community.slug}`}
+                key={community.slug}
+                className="flex justify-start items-center gap-3 "
+              >
+                <Image
+                  src={community.icon}
+                  alt="community icon"
+                  width={40}
+                  height={40}
+                  className="rounded-full w-8 h-8 "
+                />
+                <p className="font-semibold text-xs">
+                  r/{community.community_name}
+                </p>
+              </Link>
+            ))}
+          </div>
         </AccordionContent>
       </AccordionItem>
     </>

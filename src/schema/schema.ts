@@ -30,7 +30,6 @@ export const communitySchema = z.object({
     .max(30),
   icon: z.string(),
   banner: z.string(),
-  // topics: z.array(z.string()).min(1, "Atleast one tag required"),
   mature: z.boolean().default(false),
   description: z
     .string()
@@ -38,5 +37,4 @@ export const communitySchema = z.object({
       message: "description is requred",
     })
     .max(300),
-  AdminId: z.string().min(1),
 });

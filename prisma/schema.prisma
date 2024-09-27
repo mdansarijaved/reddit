@@ -119,7 +119,6 @@ model Community {
   icon           String
   banner         String
   slug           String
-  topics         String[]
   mature         Boolean   @default(false)
   description    String
   posts          Posts[]
