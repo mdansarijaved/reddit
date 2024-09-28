@@ -2,7 +2,7 @@ import React from "react";
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import Toolbar from "./toolbar";
-import BulletList from "@tiptap/extension-bullet-list";
+
 function Tiptap({
   body,
   onChange,
@@ -11,8 +11,9 @@ function Tiptap({
   onChange: (richText: string) => void;
 }) {
   const editor = useEditor({
-    extensions: [StarterKit.configure(), BulletList],
+    extensions: [StarterKit.configure()],
     content: body,
+    immediatelyRender: false,
     editorProps: {
       attributes: {
         class: "  min-h-[150px] p-2 focus:outline-none",

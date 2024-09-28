@@ -37,6 +37,7 @@ import Image from "next/image";
 import { createCommunity } from "@/app/actions/community/createcommunity";
 import { Community } from "@prisma/client";
 import Link from "next/link";
+import { Separator } from "../ui/separator";
 
 type CommunityType = z.infer<typeof communitySchema>;
 
@@ -322,6 +323,7 @@ function Communities({
             ))}
           </div>
         </AccordionContent>
+        <Separator className="bg-neutral-300" />
       </AccordionItem>
     </>
   );

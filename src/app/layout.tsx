@@ -2,8 +2,10 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import "@radix-ui/themes/styles.css";
-import { Toaster } from "@/components/ui/toaster";
 import Providers from "./provider";
+import Navbar from "@/components/navbar/navbar";
+import SideBar from "@/components/sidebar/sidebar";
+import { Toaster } from "sonner";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -19,7 +21,11 @@ export default function RootLayout({
     <html lang="en" className="h-full ">
       <body className="w-full  h-screen ">
         <Providers>
-          <main className="w-full h-full ">{children}</main>
+          <Navbar />
+          <main className="relative flex justify-start w-full  min-h-screen ">
+            <SideBar />
+            <div className="pt-14 w-full">{children}</div>
+          </main>
           <Toaster />
         </Providers>
       </body>

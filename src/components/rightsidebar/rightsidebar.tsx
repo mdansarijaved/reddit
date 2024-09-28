@@ -1,60 +1,82 @@
-import { ScrollArea } from "@radix-ui/react-scroll-area";
-import { HouseIcon } from "lucide-react";
-import React from "react";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { db } from "@/lib/db";
+import Image from "next/image";
 
-export default function RightBar() {
+import React from "react";
+import { Separator } from "../ui/separator";
+import Link from "next/link";
+
+export default async function RightBar() {
+  const posts = await db.posts.findMany({
+    take: 5,
+    orderBy: {
+      createdAt: "desc",
+    },
+    select: {
+      id: true,
+      title: true,
+      body: true,
+      media: true,
+      slug: true,
+      User: {
+        select: {
+          id: true,
+          name: true,
+        },
+      },
+      Community: {
+        select: {
+          id: true,
+          community_name: true,
+          slug: true,
+        },
+      },
+      likes: {
+        select: {
+          id: true,
+          userid: true,
+        },
+      },
+    },
+  });
   return (
-    <div>
-      <ScrollArea
-        className={`h-full overflow-y-scroll fixed max-h-screen top-0 right-0  z-10
-           lg:block  w-[350px] px-7  border-x border-gray-700  `}
-      ></ScrollArea>
+    <div className="max-w-xs sticky top-20 right-10 border shadow-xl  h-fit w-full hidden xl:block rounded-xl py-3 ">
+      <p className="px-4 py-3">Recent Posts</p>
+      <div className="w-full space-y-4">
+        {posts.map((post, i) => (
+          <div className="w-full space-y-2 border-t  pt-3">
+            <div className="flex justify-start items-center gap-2 px-4">
+              <div className="w-6 h-6 rounded-full bg-green-800"></div>
+              <div className="">
+                <p className="text-xs font-light">
+                  r/{post.Community?.community_name}
+                </p>
+              </div>
+            </div>
+            <div className="w-full flex justify-between items-start gap-4 px-4">
+              <div className="space-y-1">
+                <Link href={`/post/${post.slug}`}>
+                  <p className="text-sm">{post.title}</p>
+                </Link>
+                <div className="w-full text-xs font-light">
+                  <div>{post.likes.length} upvotes</div>
+                </div>
+              </div>
+              {post.media[0] ? (
+                <Image
+                  src={post.media[0]}
+                  width={80}
+                  height={80}
+                  alt="image"
+                  className="rounded overflow-clip w-10 h-10"
+                />
+              ) : (
+                ""
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
-
-/**
- * 
- * <div className="w-full flex justify-between relative  text-white h-[3.6rem]  items-center px-1">
-          <div className="flex">
-            <button className="lg:hidden mr-4">
-              <Menu size={24} />
-            </button>
-            <Link href="/" className="flex gap-2">
-              <FaReddit
-                className="text-red-600 bg-white rounded-full"
-                size={30}
-              />
-              <p className="font-bold text-2xl hidden lg:block">reddit</p>
-            </Link>
-          </div>
-          <form className="lg:flex hidden gap-2 xl:absolute xl:right-1/2 xl:translate-x-1/2 bg-[#333d42] px-3 mx-6 lg:mx-0 rounded-full py-[0.5rem] items-center w-full lg:w-[30rem]">
-            <Search size={24} />
-            <input
-              type="text"
-              placeholder="Search Reddit"
-              className="bg-[#333d42] text-[0.9rem] w-full outline-none mr-10"
-            />
-          </form>
-          <div className="flex gap-2 items-center">
-            <button className="hover:bg-[#333d42] px-2 py-2 rounded-full hidden lg:block">
-              <MousePointerClick />
-            </button>
-            <button className="hover:bg-[#333d42] px-2 py-2 rounded-full">
-              <MessageCircleMore />
-            </button>
-            <Link
-              href="/createpost"
-              className="md:flex gap-2 hover:bg-[#333d42] px-2 py-2 rounded-full justify-center items-center hidden"
-            >
-              <Plus />
-              <p>Create</p>
-            </Link>
-            <button className="hover:bg-[#333d42] px-2 py-2 rounded-full hidden md:block">
-              <Bell />
-            </button>
-            <div className=" rounded-full hidden lg:flex"></div>
-            <div className="w-8 h-8 rounded-full bg-red-900 lg:hidden"></div>
-          </div>
-        </div>
- */

@@ -10,7 +10,7 @@ import { BsThreeDots } from "react-icons/bs";
 import Image from "next/image";
 import { handleLikes } from "@/app/actions/likes";
 import { TbArrowBigUp } from "react-icons/tb";
-import isLikedbyUser from "@/lib/post/likedByUser";
+import isLikedbyUser from "@/lib/isLikedByUser";
 import { GoComment } from "react-icons/go";
 import { LiaMedalSolid } from "react-icons/lia";
 import { RiShareForwardLine } from "react-icons/ri";
@@ -23,7 +23,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
     const isLiked = await isLikedbyUser(post);
     return (
       <>
-        <div className="max-w-5xl w-full  border-x border-b   px-4">
+        <div className="max-w-xl w-full  border-x border-b   px-4">
           <div className="flex justify-between">
             <div className="flex gap-2  items-center mt-1">
               <div className="w-6 h-6 rounded-full bg-green-500 "></div>
@@ -43,14 +43,16 @@ export default async function Page({ params }: { params: { slug: string } }) {
                 {post?.media &&
                   post?.media.map((media, index) => (
                     <CarouselItem key={index}>
-                      <Image
-                        alt="hey"
-                        key={index}
-                        height={600}
-                        width={600}
-                        className="w-full rounded-xl h-[28rem] mt-1 object-cover"
-                        src={media}
-                      />
+                      <div className="w-full  bg-gray-300">
+                        <Image
+                          alt="hey"
+                          key={index}
+                          height={600}
+                          width={600}
+                          className="w-full  h-[28rem] mt-1 object-contain"
+                          src={media}
+                        />
+                      </div>
                     </CarouselItem>
                   ))}
               </CarouselContent>

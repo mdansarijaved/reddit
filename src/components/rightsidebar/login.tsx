@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { redirect } from "next/navigation";
 import { CircleUserRound } from "lucide-react";
 import { auth, signOut } from "@/auth";
 

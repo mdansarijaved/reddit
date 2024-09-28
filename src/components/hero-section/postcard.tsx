@@ -15,8 +15,9 @@ import {
 import { handleLikes } from "@/app/actions/likes";
 import Link from "next/link";
 import { Session } from "next-auth";
-import { likes, post, user } from "@/types/post";
-import isLikedbyUser from "@/lib/post/likedByUser";
+import { post } from "@/types/post";
+import isLikedbyUser from "@/lib/isLikedByUser";
+import { db } from "@/lib/db";
 
 export default async function PostCard({
   posts,
@@ -28,13 +29,21 @@ export default async function PostCard({
   const isLiked = await isLikedbyUser(posts);
 
   return (
-    <div className="max-w-5xl w-[700px] max-h-[35.4rem] border-x border-b py-2 px-4">
+    <div className="max-w-xl   border-x border-b py-2 px-4">
       <div className="flex justify-between">
         <div className="flex gap-2 items-center mt-1">
           <div className="w-6 h-6 rounded-full bg-green-500 "></div>
-          <p className="text-muted-foreground text-sm font-bold ">
-            {posts.User.name}
-          </p>
+          <div className="">
+            <Link
+              href={`/community/${posts.Community?.slug}`}
+              className="text-muted-foreground text-xs  "
+            >
+              r/{posts.Community?.community_name}
+            </Link>
+            <p className="text-muted-foreground text-xs font-light  ">
+              u/{posts.User.name}
+            </p>
+          </div>
           <p className="text-sm text-muted-foreground "></p>
         </div>
         <button>
@@ -49,14 +58,16 @@ export default async function PostCard({
           <CarouselContent>
             {posts.media.map((media, index) => (
               <CarouselItem key={index}>
-                <Image
-                  alt="hey"
-                  key={index}
-                  height={600}
-                  width={600}
-                  className="w-full rounded-xl h-[28rem] mt-1 object-cover"
-                  src={media}
-                />
+                <div className="w-full bg-gray-300 rounded-xl">
+                  <Image
+                    alt="hey"
+                    key={index}
+                    height={600}
+                    width={600}
+                    className="w-full  h-[28rem] object-contain "
+                    src={media}
+                  />
+                </div>
               </CarouselItem>
             ))}
           </CarouselContent>

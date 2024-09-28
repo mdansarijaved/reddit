@@ -36,8 +36,9 @@ function CreatePostForm({ user }: { user: Session }) {
     resolver: zodResolver(postSchema),
     defaultValues: {
       media: [],
-      body: "write something",
-      title: "write something",
+      body: "",
+      title: "",
+      community: "",
     },
   });
   const [selected, setSelected] = useState(" ");
@@ -45,14 +46,18 @@ function CreatePostForm({ user }: { user: Session }) {
   const user_name: string = user?.user?.name ?? "defaultUserName";
 
   const onsubmit = async (postdata: postType) => {
+    console.log(postdata);
+    // alert("HERLLO");
     toast.promise(createpost(postdata), {
       loading: "Creating Post.",
-      success: "Create Post",
+      success: (e) => {
+        return e.error ?? e.message;
+      },
       error: (e) => {
         return e.error;
       },
     });
-    form.reset();
+    // form.reset();
   };
   return (
     <div className=" mx-10   lg:w-[45rem] md:w-[43rem]    space-y-4">
@@ -62,24 +67,25 @@ function CreatePostForm({ user }: { user: Session }) {
           Drafts
         </Button>
       </div>
-      <SelectCommunity />
-      <div className="flex mt-5 justify-start  md:gap-2 text-sm">
-        {buttons.map((button) => (
-          <button
-            key={button.id}
-            onClick={() => setSelected(button.id)}
-            className={` w-20 text-start py-2   ${
-              selected === button.id
-                ? "underline underline-offset-8 decoration-[#648efc]"
-                : ""
-            } ${button.label === "Link" ? "text-muted-foreground" : ""}`}
-          >
-            {button.label}
-          </button>
-        ))}
-      </div>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onsubmit)} className="space-y-6">
+          <SelectCommunity form={form} />
+
+          <div className="flex mt-5 justify-start  md:gap-2 text-sm">
+            {buttons.map((button) => (
+              <button
+                key={button.id}
+                onClick={() => setSelected(button.id)}
+                className={` w-20 text-start py-2   ${
+                  selected === button.id
+                    ? "underline underline-offset-8 decoration-[#648efc]"
+                    : ""
+                } ${button.label === "Link" ? "text-muted-foreground" : ""}`}
+              >
+                {button.label}
+              </button>
+            ))}
+          </div>
           <div className="space-y-6">
             <FormField
               control={form.control}
@@ -111,20 +117,18 @@ function CreatePostForm({ user }: { user: Session }) {
             />
             <ImageUpload form={form} user_name={user_name} />
           </div>
-          <Button
-            className=""
-            disabled={form.formState.isSubmitting}
-            variant={"outline"}
-          >
-            {form.formState.isSubmitting ? (
-              <span>
-                Posting
-                <LoaderCircle className="animate-spin" />
-              </span>
-            ) : (
-              "Create"
-            )}
-          </Button>
+          <div className="w-full flex justify-end">
+            <Button className="" disabled={form.formState.isSubmitting}>
+              {form.formState.isSubmitting ? (
+                <span>
+                  Posting
+                  <LoaderCircle className="animate-spin" />
+                </span>
+              ) : (
+                "Create"
+              )}
+            </Button>
+          </div>
         </form>
       </Form>
     </div>

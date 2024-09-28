@@ -16,6 +16,7 @@ function ImageUpload({
       title: string;
       body: string;
       media: string[];
+      community: string;
     },
     any,
     undefined

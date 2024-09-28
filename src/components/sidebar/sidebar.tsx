@@ -22,7 +22,7 @@ export default async function SideBar() {
   return (
     <div
       className=" hidden min-h-screen sticky h-full top-0 pt-0 left-0   z-10 text-neutral-500
-           lg:block w-full max-w-72 px-4  border-x  border-gray-300"
+           xl:block w-full max-w-72 px-4  border-x  border-gray-300"
     >
       <ScrollArea className={`min-h-screen  pt-14 `}>
         <div className=" text-sm py-4  w-full ">

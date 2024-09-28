@@ -19,6 +19,7 @@ export const postSchema = z.object({
   title: z.string().min(1).max(300),
   body: z.string().min(1),
   media: z.string().array(),
+  community: z.string(),
 });
 
 export const communitySchema = z.object({

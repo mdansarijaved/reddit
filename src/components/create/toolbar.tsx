@@ -1,8 +1,8 @@
 "use client";
-import React, { useCallback } from "react";
+import React from "react";
 import { type Editor } from "@tiptap/react";
 import { Toggle } from "../ui/toggle";
-import { Bold, Image, Italic, List, Strikethrough } from "lucide-react";
+import { Bold, Italic, List, Strikethrough } from "lucide-react";
 
 type EditorType = {
   editor: Editor | null;

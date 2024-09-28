@@ -7,13 +7,34 @@ import { Truculenta } from "next/font/google";
 class PostError extends Error {}
 
 export const getPostbySlug = async (slug: string) => {
+  console.log(slug);
   try {
     const post = await db.posts.findFirst({
-      include: {
-        User: true,
-        likes: true,
-        children: true,
-        parent: true,
+      select: {
+        id: true,
+        title: true,
+        body: true,
+        media: true,
+        slug: true,
+        User: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
+        Community: {
+          select: {
+            id: true,
+            slug: true,
+            community_name: true,
+          },
+        },
+        likes: {
+          select: {
+            id: true,
+            userid: true,
+          },
+        },
       },
       where: {
         slug: slug,

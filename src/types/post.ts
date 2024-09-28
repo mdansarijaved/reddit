@@ -1,9 +1,20 @@
-import { Posts } from "@prisma/client";
-
-export type likes = {
+export type post = {
+  User: {
+    id: string;
+    name: string | null;
+  };
+  Community: {
+    id: string;
+    community_name: string;
+    slug: string;
+  } | null;
+  id: string;
+  title: string;
+  body: string;
+  media: string[];
+  slug: string;
+  likes: {
     id: string;
     userid: string;
+  }[];
 };
-export type user = { id: string; name: string | null };
-
-export type post = Posts & { User: user } & { likes: likes[] }

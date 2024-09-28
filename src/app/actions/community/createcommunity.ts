@@ -4,6 +4,7 @@ import { auth } from "@/auth";
 import { db } from "@/lib/db";
 import { communitySchema } from "@/schema/schema";
 import { nanoid } from "nanoid";
+import { revalidatePath } from "next/cache";
 import { toast } from "sonner";
 import * as z from "zod";
 
@@ -19,9 +20,8 @@ export const createCommunity = async (
     toast.error("error while parsing data");
   }
   try {
-    const slugName = data.community_name.replace(/[^a-zA-Z0-9.]/g, "+");
-    const hash = nanoid(5);
-    const slugname = `${slugName}${hash}`;
+    const slugName = data.community_name.replace(/[^a-zA-Z0-9.]/g, "_");
+    const slugname = `${slugName}`;
     await db.community.create({
       data: {
         ...data,
@@ -29,6 +29,7 @@ export const createCommunity = async (
         slug: slugname,
       },
     });
+    revalidatePath("/");
   } catch (e) {
     console.log(e);
   }
