@@ -77,6 +77,10 @@ export default async function RightBar() {
           </div>
         ))}
       </div>
+      <div className="p-3 border-t">
+        <p className="font-bold text-lg">CommuneHub.</p>
+        <span className="text-xs text-muted-foreground">Made by Javed</span>
+      </div>
     </div>
   );
 }

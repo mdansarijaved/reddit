@@ -36,7 +36,7 @@ export default async function SideBar() {
             <HouseIcon size={20} /> Home
           </Link>
           <Link
-            href={"/"}
+            href={"/popular"}
             className={cn(
               buttonVariants({ variant: "ghost" }),
               "w-full px-1   justify-start gap-5 py-2  "
@@ -45,22 +45,13 @@ export default async function SideBar() {
             <GoPeople size={20} /> Popular
           </Link>
           <Link
-            href={"/"}
+            href={"/explore"}
             className={cn(
               buttonVariants({ variant: "ghost" }),
               "w-full px-1   justify-start gap-5 py-2  "
             )}
           >
             <SearchSlashIcon size={20} /> Explore
-          </Link>
-          <Link
-            href={"/"}
-            className={cn(
-              buttonVariants({ variant: "ghost" }),
-              "w-full px-1   justify-start gap-5 py-2  "
-            )}
-          >
-            <AlignLeft size={20} /> All
           </Link>
         </div>
         <Separator className="bg-neutral-300" />

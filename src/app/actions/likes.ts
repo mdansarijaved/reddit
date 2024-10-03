@@ -5,10 +5,13 @@ import { revalidatePath } from "next/cache";
 
 export const handleLikes = async (postId: string) => {
   const user = await auth();
+  if (!user) {
+    return;
+  }
   try {
     const postLiked = await db.likedby.findFirst({
       where: {
-        userid: user!.user.id,
+        userid: user.user.id,
         postsId: postId,
       },
     });
@@ -16,23 +19,22 @@ export const handleLikes = async (postId: string) => {
     if (postLiked) {
       await db.likedby.delete({
         where: {
-          id: postLiked.id
-        }
-      })
+          id: postLiked.id,
+        },
+      });
       revalidatePath("/");
-      return
+      return;
     }
-
 
     await db.likedby.create({
       data: {
         postsId: postId,
-        userid: user!.user.id
-      }
-    })
-    revalidatePath("/")
-    return
+        userid: user.user.id,
+      },
+    });
+    revalidatePath("/");
+    return;
   } catch (error) {
-    console.log("there is some error")
+    console.log("there is some error");
   }
 };

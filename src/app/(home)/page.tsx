@@ -37,9 +37,7 @@ export default async function Home() {
   return (
     <main className={`relative w-full  flex justify-center `}>
       <div className=" ">
-        {posts.map((post) => (
-          <PostCard posts={post} key={post.id} user={user} />
-        ))}
+        <PostCard posts={posts} user={user} />
       </div>
     </main>
   );
