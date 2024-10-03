@@ -7,6 +7,8 @@ export type post = {
     id: string;
     community_name: string;
     slug: string;
+    icon:string;
+    banner:string
   } | null;
   id: string;
   title: string;
@@ -17,4 +19,10 @@ export type post = {
     id: string;
     userid: string;
   }[];
+  _count: count;
+  createdAt: Date;
+};
+
+type count = {
+  likes: number;
 };

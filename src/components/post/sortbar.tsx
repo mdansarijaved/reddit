@@ -20,10 +20,6 @@ const sortValues = [
     label: "New",
   },
   {
-    value: "hot",
-    label: "Hot",
-  },
-  {
     value: "rising",
     label: "Rising",
   },

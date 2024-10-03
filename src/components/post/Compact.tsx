@@ -16,7 +16,7 @@ export const Compact = ({
   const isLiked = posts?.likes.some((like) => like.userid === user?.user.id);
 
   return (
-    <div className="max-w-xl border-x w-full  border-b p-2">
+    <div className="max-w-xl border-x   border-b p-2 w-[36rem]">
       <div className="flex justify-start items-start gap-2">
         {posts.media.length > 0 ? (
           <Link href={`/post/${posts.slug}`}>

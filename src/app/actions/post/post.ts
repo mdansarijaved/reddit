@@ -45,12 +45,34 @@ export const createpost = async (postdata: z.infer<typeof postSchema>) => {
 };
 
 export const getAllPost = async () => {
-  const posts = await db.posts.findMany({
-    include: {
+  await new Promise((resolve) => setTimeout(resolve, 2000));
+  return await db.posts.findMany({
+    select: {
+      _count: {
+        select: {
+          likes: true,
+        },
+      },
+      id: true,
+      createdAt: true,
+      title: true,
+      body: true,
+      media: true,
+      slug: true,
       User: {
         select: {
+          _count: true,
           id: true,
           name: true,
+        },
+      },
+      Community: {
+        select: {
+          id: true,
+          community_name: true,
+          slug: true,
+          icon: true,
+          banner: true,
         },
       },
       likes: {
@@ -61,5 +83,4 @@ export const getAllPost = async () => {
       },
     },
   });
-  return posts;
 };

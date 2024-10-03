@@ -8,9 +8,11 @@ import LikeButton from "./LikeButton";
 import { GoComment } from "react-icons/go";
 import { LiaMedalSolid } from "react-icons/lia";
 import { RiShareForwardLine } from "react-icons/ri";
+import PostBody from "./body";
 
 function Card({ posts, user }: { posts: post; user: Session | null }) {
   const isLiked = posts?.likes.some((like) => like.userid === user?.user.id);
+
   return (
     <div className="max-w-xl   border-x border-b py-2 px-4">
       <PostHeading posts={posts} />
@@ -20,10 +22,7 @@ function Card({ posts, user }: { posts: post; user: Session | null }) {
       {posts.media.length > 0 ? (
         <ImageCarousel media={posts.media} />
       ) : (
-        <div
-          className="w-full line-clamp-3 text-muted-foreground"
-          dangerouslySetInnerHTML={{ __html: posts?.body || "" }}
-        ></div>
+        <PostBody body={posts.body} />
       )}
       <div className="flex mt-2 gap-4 items-center">
         <div className={`flex items-center rounded-full p-2`}>

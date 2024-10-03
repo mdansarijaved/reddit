@@ -11,6 +11,12 @@ export const getPostbySlug = async (slug: string) => {
   try {
     const post = await db.posts.findFirst({
       select: {
+        _count: {
+          select: {
+            likes: true,
+          },
+        },
+        createdAt: true,
         id: true,
         title: true,
         body: true,

@@ -1,11 +1,12 @@
 "use client";
 import { getCommunitybySlug } from "@/app/actions/community/getAllCommunity";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
-import { useQuery, useSuspenseQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import { useParams } from "next/navigation";
 import React, { Suspense } from "react";
 import { Button } from "../ui/button";
+import { Skeleton } from "../ui/skeleton";
 
 function RightBar() {
   const params = useParams<{ slug: string }>();
@@ -17,8 +18,10 @@ function RightBar() {
   return (
     <div className="max-w-xs rounded-xl sticky min-h-56 top-20 right-10 w-full h-fit border shadow-lg overflow-hidden">
       {community.isPending ? (
-        <div className="w-full h-full flex justify-center items-center">
-          <AiOutlineLoading3Quarters className="animate-spin text-3xl" />
+        <div className="w-full h-full space-y-3 py-3 px-3 ">
+          <Skeleton className="w-full h-12"></Skeleton>
+          <Skeleton className="w-full h-12"></Skeleton>
+          <Skeleton className="w-full h-12"></Skeleton>
         </div>
       ) : (
         <div>

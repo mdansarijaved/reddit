@@ -1,15 +1,5 @@
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel";
 import { getPostbySlug } from "@/app/actions/post/getPostbyId";
 import { BsThreeDots } from "react-icons/bs";
-import Image from "next/image";
-import { handleLikes } from "@/app/actions/likes";
-import { TbArrowBigUp } from "react-icons/tb";
 import { GoComment } from "react-icons/go";
 import { LiaMedalSolid } from "react-icons/lia";
 import { RiShareForwardLine } from "react-icons/ri";
