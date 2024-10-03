@@ -27,8 +27,7 @@ function Card({ posts, user }: { posts: post; user: Session | null }) {
       )}
       <div className="flex mt-2 gap-4 items-center">
         <div className={`flex items-center rounded-full p-2`}>
-          <LikeButton isLiked={isLiked} id={posts.id} />
-          <p className="text-[0.8rem] font-medium px-3">{posts.likes.length}</p>
+          <LikeButton isLiked={isLiked} post={posts} />
         </div>
         <button className="flex items-center text-[0.8rem] font-medium gap-2 py-2 rounded-full px-3 ">
           <GoComment size={16} />

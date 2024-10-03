@@ -3,6 +3,8 @@ import { Session } from "next-auth";
 import Image from "next/image";
 import { PostHeading } from "./PostHeading";
 import LikeButton from "./LikeButton";
+import { FileEdit } from "lucide-react";
+import Link from "next/link";
 
 export const Compact = ({
   posts,
@@ -14,20 +16,36 @@ export const Compact = ({
   const isLiked = posts?.likes.some((like) => like.userid === user?.user.id);
 
   return (
-    <div className="max-w-xl border-x w-full  border-b py-1 px-4 flex justify-start items-center">
-      {posts.media.length > 0 ? (
-        <Image
-          src={posts.media[0]}
-          width={1000}
-          height={1000}
-          alt="image"
-          className="w-24 h-24 object-cover rounded-xl"
-        />
-      ) : null}
-      <div className="grid items-start justify-start gap-1 w-full bg-red-400">
-        <PostHeading posts={posts} />
-        <div className="text-lg font-semibold line-clamp-2">{posts.title}</div>
-        <LikeButton id={posts.id} isLiked={isLiked} />
+    <div className="max-w-xl border-x w-full  border-b p-2">
+      <div className="flex justify-start items-start gap-2">
+        {posts.media.length > 0 ? (
+          <Link href={`/post/${posts.slug}`}>
+            <div className="w-24 bg-red-300 h-24 rounded-xl">
+              <Image
+                src={posts.media[0]}
+                width={1000}
+                height={1000}
+                alt="image"
+                className="w-full h-full object-cover rounded-xl"
+              />
+            </div>
+          </Link>
+        ) : (
+          <Link href={`/post/${posts.slug}`}>
+            <div className="w-24 h-24 bg-black grid justify-center items-center rounded-xl ">
+              <FileEdit className="w-12 h-12" />
+            </div>
+          </Link>
+        )}
+        <div className=" gap-1 w-full">
+          <div className="flex w-full  ">
+            <PostHeading posts={posts} />
+          </div>
+          <div className="text-lg font-semibold line-clamp-2">
+            {posts.title}
+          </div>
+          <LikeButton post={posts} isLiked={isLiked} />
+        </div>
       </div>
     </div>
   );
