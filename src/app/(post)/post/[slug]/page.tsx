@@ -6,6 +6,7 @@ import { RiShareForwardLine } from "react-icons/ri";
 import { Input } from "@/components/ui/input";
 import ImageCarousel from "@/components/post/ImageCarousel";
 import LikeButton from "@/components/post/LikeButton";
+import { post } from "@/types/post";
 
 export default async function Page({ params }: { params: { slug: string } }) {
   const { post, error } = await getPostbySlug(params.slug);

@@ -1,15 +1,15 @@
-import { db } from "@/lib/db";
 import React from "react";
-
-import { getAllPost } from "../actions/post/post";
-
-import PopularCaraousel from "@/components/popular/popularCaraousel";
+import PopularSection from "@/components/popular/PopularSection";
+import { auth } from "@/auth";
 
 async function Popular() {
-  const posts = await getAllPost();
+  const user = await auth();
+  if (!user) {
+    return;
+  }
   return (
     <div>
-      <PopularCaraousel />
+      <PopularSection user={user} />
     </div>
   );
 }

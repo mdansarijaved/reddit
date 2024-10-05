@@ -5,18 +5,21 @@ import { PostHeading } from "./PostHeading";
 import LikeButton from "./LikeButton";
 import { FileEdit } from "lucide-react";
 import Link from "next/link";
+import { cn } from "@/lib/utils";
 
 export const Compact = ({
   posts,
   user,
+  className,
 }: {
   posts: post;
   user: Session | null;
+  className?: string;
 }) => {
   const isLiked = posts?.likes.some((like) => like.userid === user?.user.id);
 
   return (
-    <div className="max-w-xl border-x   border-b p-2 w-[36rem]">
+    <div className={cn(" border-x   border-b p-2 w-[36rem]", className)}>
       <div className="flex justify-start items-start gap-2">
         {posts.media.length > 0 ? (
           <Link href={`/post/${posts.slug}`}>

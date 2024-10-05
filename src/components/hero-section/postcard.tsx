@@ -45,42 +45,20 @@ export default function PostCard({ user }: { user: Session | null }) {
     return <div>Nothings here</div>;
   }
 
-  const sortPosts = (posts: post[], sortBy: string) => {
-    switch (sortBy) {
-      case "top":
-        return [...posts].sort((a, b) => {
-          const likesA = a._count?.likes ?? 0;
-          const likesB = b._count?.likes ?? 0;
-          return likesB - likesA;
-        });
-      case "new":
-        return [...posts].sort(
-          (a, b) =>
-            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-        );
-      case "rising":
-        return [...posts].sort(
-          (a, b) =>
-            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-        );
-      default:
-        return posts;
-    }
-  };
-
-  const currPost = sortPosts(posts, value);
   return (
     <div>
       <div className="w-full border-b flex justify-start items-center ">
         <SortSection value={value} setValue={setValue} />
         <ViewLayout value={layout} setValue={setLayout} />
       </div>
-      {currPost.map((post) => (
+      {posts.map((post) => (
         <div key={post.id}>
           {layout === "Card" ? (
             <Card posts={post} user={user} />
           ) : (
-            <Compact posts={post} user={user} />
+            <div className="max-w-xl">
+              <Compact posts={post} user={user} />
+            </div>
           )}
         </div>
       ))}
